@@ -7,6 +7,9 @@ A social networking site with the following functionalities:
   - Change profile picture, avatar, and description.
 
 Here are some preview images: 
+![image](https://user-images.githubusercontent.com/53483710/145816924-b0bc0f06-ef28-4b46-9ddb-a1e63f6371d2.png)
+
+![image](https://user-images.githubusercontent.com/53483710/145816951-34c9f3b9-0f36-407a-b5dc-93c33c23fd9a.png)
 
 ![image](https://user-images.githubusercontent.com/53483710/145805661-8d262317-b2b3-495d-8a6e-c98cc03bdcbd.png)
 
