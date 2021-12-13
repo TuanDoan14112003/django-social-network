@@ -1,0 +1,234 @@
+{%extends 'anime/base.html' %}
+{%load static %}
+{%load imagekit_url%}
+{%load humanize%}
+{%block content %}
+  <!-- CONTENT GRID -->
+  <div class="content-grid">
+    <!-- SECTION BANNER -->
+    <div class="section-banner">
+      <!-- SECTION BANNER ICON -->
+      <img class="section-banner-icon" src="{% static 'img/banner/accounthub-icon.png' %}" alt="accounthub-icon">
+      <!-- /SECTION BANNER ICON -->
+
+      <!-- SECTION BANNER TITLE -->
+      <p class="section-banner-title">Account</p>
+      <!-- /SECTION BANNER TITLE -->
+
+      <!-- SECTION BANNER TEXT -->
+      <p class="section-banner-text">Personal information, notifications and password</p>
+      <!-- /SECTION BANNER TEXT -->
+    </div>
+    <!-- /SECTION BANNER -->
+
+    <!-- GRID -->
+    <div class="grid grid-3-9 medium-space">
+      <!-- GRID COLUMN -->
+      <div class="account-hub-sidebar">
+        <!-- SIDEBAR BOX -->
+        <div class="sidebar-box no-padding">
+          <!-- SIDEBAR MENU -->
+          <div class="sidebar-menu round-borders">
+            <!-- SIDEBAR MENU ITEM -->
+            <div class="sidebar-menu-item">
+              <!-- SIDEBAR MENU HEADER -->
+              <div class="sidebar-menu-header accordion-trigger-linked">
+                <!-- SIDEBAR MENU HEADER ICON -->
+                <svg class="sidebar-menu-header-icon icon-profile">
+                  <use xlink:href="#svg-profile"></use>
+                </svg>
+                <!-- /SIDEBAR MENU HEADER ICON -->
+
+                <!-- SIDEBAR MENU HEADER CONTROL ICON -->
+                <div class="sidebar-menu-header-control-icon">
+                  <!-- SIDEBAR MENU HEADER CONTROL ICON OPEN -->
+                  <svg class="sidebar-menu-header-control-icon-open icon-minus-small">
+                    <use xlink:href="#svg-minus-small"></use>
+                  </svg>
+                  <!-- /SIDEBAR MENU HEADER CONTROL ICON OPEN -->
+
+                  <!-- SIDEBAR MENU HEADER CONTROL ICON CLOSED -->
+                  <svg class="sidebar-menu-header-control-icon-closed icon-plus-small">
+                    <use xlink:href="#svg-plus-small"></use>
+                  </svg>
+                  <!-- /SIDEBAR MENU HEADER CONTROL ICON CLOSED -->
+                </div>
+                <!-- /SIDEBAR MENU HEADER CONTROL ICON -->
+
+                <!-- SIDEBAR MENU HEADER TITLE -->
+                <p class="sidebar-menu-header-title">Personal information</p>
+                <!-- /SIDEBAR MENU HEADER TITLE -->
+
+                <!-- SIDEBAR MENU HEADER TEXT -->
+                <p class="sidebar-menu-header-text">Change your cover, avatar and description
+                </p>
+                <!-- /SIDEBAR MENU HEADER TEXT -->
+              </div>
+              <!-- /SIDEBAR MENU HEADER -->
+
+              <!-- SIDEBAR MENU BODY -->
+              <div class="sidebar-menu-body accordion-content-linked accordion-open">
+                <!-- SIDEBAR MENU LINK -->
+                <a class="sidebar-menu-link" href="{% url 'account-info' %}">Personal information</a>
+                <!-- /SIDEBAR MENU LINK -->
+
+
+                <!-- SIDEBAR MENU LINK -->
+                <a class="sidebar-menu-link active" href="#">Notifications</a>
+                <!-- /SIDEBAR MENU LINK -->
+
+              </div>
+              <!-- /SIDEBAR MENU BODY -->
+            </div>
+            <!-- /SIDEBAR MENU ITEM -->
+
+            <!-- SIDEBAR MENU ITEM -->
+            <div class="sidebar-menu-item">
+              <!-- SIDEBAR MENU HEADER -->
+              <div class="sidebar-menu-header accordion-trigger-linked">
+                <!-- SIDEBAR MENU HEADER ICON -->
+                <svg class="sidebar-menu-header-icon icon-settings">
+                  <use xlink:href="#svg-settings"></use>
+                </svg>
+                <!-- /SIDEBAR MENU HEADER ICON -->
+
+                <!-- SIDEBAR MENU HEADER CONTROL ICON -->
+                <div class="sidebar-menu-header-control-icon">
+                  <!-- SIDEBAR MENU HEADER CONTROL ICON OPEN -->
+                  <svg class="sidebar-menu-header-control-icon-open icon-minus-small">
+                    <use xlink:href="#svg-minus-small"></use>
+                  </svg>
+                  <!-- /SIDEBAR MENU HEADER CONTROL ICON OPEN -->
+
+                  <!-- SIDEBAR MENU HEADER CONTROL ICON CLOSED -->
+                  <svg class="sidebar-menu-header-control-icon-closed icon-plus-small">
+                    <use xlink:href="#svg-plus-small"></use>
+                  </svg>
+                  <!-- /SIDEBAR MENU HEADER CONTROL ICON CLOSED -->
+                </div>
+                <!-- /SIDEBAR MENU HEADER CONTROL ICON -->
+
+                <!-- SIDEBAR MENU HEADER TITLE -->
+                <p class="sidebar-menu-header-title">Account</p>
+                <!-- /SIDEBAR MENU HEADER TITLE -->
+
+                <!-- SIDEBAR MENU HEADER TEXT -->
+                <p class="sidebar-menu-header-text">Change your password
+                </p>
+                <!-- /SIDEBAR MENU HEADER TEXT -->
+              </div>
+              <!-- /SIDEBAR MENU HEADER -->
+
+              <!-- SIDEBAR MENU BODY -->
+              <div class="sidebar-menu-body accordion-content-linked">
+
+
+                <!-- SIDEBAR MENU LINK -->
+                <a class="sidebar-menu-link" href="{% url 'password_change' %}">Change your password</a>
+                <!-- /SIDEBAR MENU LINK -->
+              </div>
+              <!-- /SIDEBAR MENU BODY -->
+            </div>
+            <!-- /SIDEBAR MENU ITEM -->
+          </div>
+          <!-- /SIDEBAR MENU -->
+        </div>
+        <!-- /SIDEBAR BOX -->
+      </div>
+      <!-- /GRID COLUMN -->
+
+      <!-- GRID COLUMN -->
+      <div class="account-hub-content">
+        <!-- SECTION HEADER -->
+        <div class="section-header">
+          <!-- SECTION HEADER INFO -->
+          <div class="section-header-info">
+            <!-- SECTION PRETITLE -->
+            <p class="section-pretitle">My profile</p>
+            <!-- /SECTION PRETITLE -->
+
+            <!-- SECTION TITLE -->
+            <h2 class="section-title">Notifications</h2>
+            <!-- /SECTION TITLE -->
+          </div>
+          <!-- /SECTION HEADER INFO -->
+
+        </div>
+        <!-- /SECTION HEADER -->
+
+        <!-- NOTIFICATION BOX LIST -->
+        <div class="notification-box-list">
+        {%for notification in notifications%}
+          <!-- NOTIFICATION BOX -->
+            <div class="notification-box">
+              <!-- USER STATUS -->
+              <div class="user-status notification">
+                <!-- USER STATUS AVATAR -->
+                <a class="user-status-avatar" href="{{notification.actor.profile.get_absolute_url}}">
+                  <!-- USER AVATAR -->
+                  <div class="user-avatar small no-outline">
+                    <!-- USER AVATAR CONTENT -->
+                    <div style="top:2px" class="user-avatar-content">
+                      <!-- HEXAGON -->
+                      <img style="object-fit:cover;width:40px;height:40px;border-radius:50%" src="{{notification.actor.profile.avatar.name|change_to_imagekit_url}}"></img>
+                      <!-- /HEXAGON -->
+                    </div>
+                    <!-- /USER AVATAR CONTENT -->
+                  </div>
+                  <!-- /USER AVATAR -->
+                </a>
+                <!-- /USER STATUS AVATAR -->
+
+                <!-- USER STATUS TITLE -->
+                <p class="user-status-title"><a class="bold" href="{{notification.actor.profile.get_absolute_url}}">{{notification.actor.username}}</a>
+                {%if notification.action_object.parent_comment%}
+                <a style="word-break:normal" class="highlighted" href="{{notification.action_object.get_absolute_url}}#comment_{{notification.action_object.parent_comment.id}}">{{notification.verb}}</a></p>
+                {%else%}
+                <a style="word-break:normal" class="highlighted" href="{{notification.action_object.get_absolute_url}}#comment_{{notification.action_object.id}}">{{notification.verb}} </a></p>
+                {%endif%}
+                <!-- /USER STATUS TITLE -->
+
+                <!-- USER STATUS TIMESTAMP -->
+                <p class="user-status-timestamp small-space">{{notification.timestamp|naturaltime}}</p>
+                <!-- /USER STATUS TIMESTAMP -->
+
+              </div>
+              <!-- /USER STATUS -->
+            </div>
+          <!-- /NOTIFICATION BOX -->
+        {%endfor%}
+        </div>
+        <!-- /NOTIFICATION BOX LIST -->
+
+        <!-- LOADER BARS -->
+        <div style="display:none" class="loader-bars">
+          <div class="loader-bar"></div>
+          <div class="loader-bar"></div>
+          <div class="loader-bar"></div>
+          <div class="loader-bar"></div>
+          <div class="loader-bar"></div>
+          <div class="loader-bar"></div>
+          <div class="loader-bar"></div>
+          <div class="loader-bar"></div>
+        </div>
+        <!-- /LOADER BARS -->
+      </div>
+      <!-- /GRID COLUMN -->
+    </div>
+    <!-- /GRID -->
+  </div>
+  <!-- /CONTENT GRID -->
+{%endblock%}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    setTimeout(function() {
+        $('.account-hub-content')[0].scrollIntoView(
+        );
+    },200)
+    
+})
+
+</script>
+{%endblock%}

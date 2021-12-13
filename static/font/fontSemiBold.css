@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'SVN-RajdhaniSemiBold';
+  src: url('SVN-RajdhaniSemiBold.eot');
+  src: url('SVN-RajdhaniSemiBold.eot?#iefix') format('embedded-opentype'),
+       url('SVN-RajdhaniSemiBold.svg#SVN-RajdhaniSemiBold') format('svg'),
+       url('SVN-RajdhaniSemiBold.ttf') format('truetype'),
+       url('SVN-RajdhaniSemiBold.woff') format('woff'),
+       url('SVN-RajdhaniSemiBold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+

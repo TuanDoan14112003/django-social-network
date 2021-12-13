@@ -1,0 +1,2 @@
+Thank you for registering an account. Please go to the following link to activate your account!
+https://{{site}}/accounts/activate/{{activation_key}}

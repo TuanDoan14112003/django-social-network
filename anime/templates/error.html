@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- bootstrap 4.3.1 -->
+  <link rel="stylesheet" href="{% static 'css/vendor/bootstrap.min.css' %}">
+  <!-- styles -->
+  <link rel="stylesheet" href="{% static 'css/styles.min.css' %}">
+  <!-- favicon -->
+  <link rel="icon" href="{% static 'img/favicon.ico' %}">
+  <title>Anikon | Error</title>
+</head>
+
+<body>
+
+  <!-- ERROR SECTION -->
+  <div class="error-section">
+    <!-- ERROR SECTION TITLE -->
+    <p class="error-section-title">{% block error_code%}{%endblock%}</p>
+    <!-- /ERROR SECTION TITLE -->
+
+    <!-- ERROR SECTION INFO -->
+    <div class="error-section-info">
+      <!-- ERROR SECTION SUBTITLE -->
+      <p class="error-section-subtitle">Oops!!...</p>
+      <!-- /ERROR SECTION SUBTITLE -->
+
+      <!-- ERROR SECTION TEXT -->
+      <p class="error-section-text">This page does not exist!</p>
+      <!-- /ERROR SECTION TEXT -->
+
+      <!-- ERROR SECTION TEXT -->
+      <p class="error-section-text">Report a bug at<a
+          href="mailto:contact@anikon.fun">contact@anikon.fun</a></p>
+      <!-- /ERROR SECTION TEXT -->
+
+      <!-- BUTTON -->
+      <input action="action" onclick="window.history.go(-1); return false;" type="submit" value="Quay lại"
+        class="button medium primary"></input>
+      <!-- /BUTTON -->
+    </div>
+    <!-- /ERROR SECTION INFO -->
+  </div>
+  <!-- /ERROR SECTION -->
+
+</body>
+<style>
+  body {
+    zoom: 100%;
+  }
+</style>
+
+</html>

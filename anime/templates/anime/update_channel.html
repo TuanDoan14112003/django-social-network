@@ -1,0 +1,225 @@
+{% extends 'anime/base.html'%}
+{% load static %}
+{%load imagekit_url%}
+{% block content %}
+<!-- CONTENT GRID -->
+<div class="content-grid">
+  <!-- SECTION BANNER -->
+  <div class="section-banner">
+    <!-- SECTION BANNER ICON -->
+    <img class="section-banner-icon" src="{% static 'img/banner/accounthub-icon.png' %}" alt="accounthub-icon">
+    <!-- /SECTION BANNER ICON -->
+
+    <!-- SECTION BANNER TITLE -->
+    <p class="section-banner-title">Edit your channel</p>
+    <!-- /SECTION BANNER TITLE -->
+
+    <!-- SECTION BANNER TEXT -->
+    <p class="section-banner-text">Profile info, messages, settings and much more!</p>
+    <!-- /SECTION BANNER TEXT -->
+  </div>
+  <!-- /SECTION BANNER -->
+
+  <!-- GRID -->
+  <div class="grid grid-3-9 medium-space">
+    <!-- GRID COLUMN -->
+    <div class="account-hub-sidebar">
+    </div>
+    <!-- /GRID COLUMN -->
+
+    <!-- GRID COLUMN -->
+    <div class="account-hub-content">
+      <!-- SECTION HEADER -->
+      <div class="section-header">
+        <!-- SECTION HEADER INFO -->
+        <div class="section-header-info">
+          <!-- SECTION PRETITLE -->
+          <p class="section-pretitle">My Channel</p>
+          <!-- /SECTION PRETITLE -->
+
+          <!-- SECTION TITLE -->
+          <h2 class="section-title">Channel Info</h2>
+          <!-- /SECTION TITLE -->
+        </div>
+        <!-- /SECTION HEADER INFO -->
+      </div>
+      <!-- /SECTION HEADER -->
+
+      <!-- GRID COLUMN -->
+      <div class="grid-column">
+        <!-- GRID -->
+        <div class="grid grid-3-3-3 centered">
+          <!-- USER PREVIEW -->
+          <div class="user-preview small fixed-height">
+            <!-- USER PREVIEW COVER -->
+            <figure id="cover-preview-figure" class="user-preview-cover liquid">
+            {{form.channel_cover}}
+              <img id="cover-preview" src="{{channel.channel_cover.name|change_to_imagekit_url}}" alt="cover-01">
+            </figure>
+            <!-- /USER PREVIEW COVER -->
+
+            <!-- USER PREVIEW INFO -->
+            <div class="user-preview-info">
+              <!-- USER SHORT DESCRIPTION -->
+              <div class="user-short-description small">
+                <!-- USER SHORT DESCRIPTION AVATAR -->
+                <div class="user-short-description-avatar user-avatar">
+
+
+                  <!-- USER AVATAR CONTENT -->
+                  <div class="user-avatar-content">
+                    <!-- HEXAGON -->
+                    <img style="border-radius:50%;object-fit: cover;width:70px;height:70px" id="avatar-preview" class="" src="{{channel.channel_avatar.name|change_to_imagekit_url}}"></img>
+                    <!-- /HEXAGON -->
+                  </div>
+                  <!-- /USER AVATAR CONTENT -->
+
+
+                  <!-- USER AVATAR BADGE -->
+                  <div class="user-avatar-badge">
+                    <!-- USER AVATAR BADGE BORDER -->
+                    <div class="user-avatar-badge-border">
+                      <!-- HEXAGON -->
+                      <div class="hexagon-28-32"></div>
+                      <!-- /HEXAGON -->
+                    </div>
+                    <!-- /USER AVATAR BADGE BORDER -->
+
+                    <!-- USER AVATAR BADGE CONTENT -->
+                    <div class="user-avatar-badge-content">
+                      <!-- HEXAGON -->
+                      <div class="hexagon-dark-22-24"></div>
+                      <!-- /HEXAGON -->
+                    </div>
+                    <!-- /USER AVATAR BADGE CONTENT -->
+
+                    <!-- USER AVATAR BADGE TEXT -->
+                    <p class="user-avatar-badge-text">0</p>
+                    <!-- /USER AVATAR BADGE TEXT -->
+                  </div>
+                  <!-- /USER AVATAR BADGE -->
+                </div>
+                <!-- /USER SHORT DESCRIPTION AVATAR -->
+                
+              </div>
+              <!-- /USER SHORT DESCRIPTION -->
+              
+            </div>
+            <!-- /USER PREVIEW INFO -->
+            
+          </div>
+          <!-- /USER PREVIEW -->
+
+          <!-- UPLOAD BOX -->
+          <div id="avatar-upload-box" class="upload-box">
+          {{form.channel_avatar}}
+            {% comment %} <input type="file" name="avatar" style="display:none" accept="image/*" id="id_avatar"> {% endcomment %}
+            <!-- UPLOAD BOX ICON -->
+            <svg class="upload-box-icon icon-members">
+              <use xlink:href="#svg-members"></use>
+            </svg>
+            <!-- /UPLOAD BOX ICON -->
+
+            <!-- UPLOAD BOX TITLE -->
+            <p class="upload-box-title">Change Channel Avatar</p>
+            <!-- /UPLOAD BOX TITLE -->
+
+            <!-- UPLOAD BOX TEXT -->
+            <p class="upload-box-text">110x110px size minimum</p>
+            <!-- /UPLOAD BOX TEXT -->
+          </div>
+          <!-- /UPLOAD BOX -->
+
+          <!-- UPLOAD BOX -->
+          <div id="cover-upload-box" class="upload-box">
+            <!-- UPLOAD BOX ICON -->
+            <svg class="upload-box-icon icon-photos">
+              <use xlink:href="#svg-photos"></use>
+            </svg>
+            <!-- /UPLOAD BOX ICON -->
+
+            <!-- UPLOAD BOX TITLE -->
+            <p class="upload-box-title">Change Channel Cover</p>
+            <!-- /UPLOAD BOX TITLE -->
+
+            <!-- UPLOAD BOX TEXT -->
+            <p class="upload-box-text">1184x300px size minimum</p>
+            <!-- /UPLOAD BOX TEXT -->
+          </div>
+          <!-- /UPLOAD BOX -->
+        </div>
+        <!-- /GRID -->
+
+        <!-- WIDGET BOX -->
+        <div id="profile-widget-box" class="widget-box">
+          <!-- WIDGET BOX TITLE -->
+          <p style="margin-top:20px" class="widget-box-title">About Your Channel</p>
+          <!-- /WIDGET BOX TITLE -->
+         
+          <!-- WIDGET BOX CONTENT -->
+          <div class="widget-box-content">
+            <!-- FORM -->
+            <form class="form">
+      
+              <!-- FORM ROW -->
+              <div class="form-row split">
+                <!-- FORM ITEM -->
+                <div class="form-item">
+                  <!-- FORM INPUT -->
+                  <div class="form-input small full">
+                    {{form.description}}
+                  </div>
+                  <!-- /FORM INPUT -->
+                  {% if form.description.errors %}
+                    {%for description_error in form.description.errors %}
+                      <h3 style="color:red,font-size:15px;">{{description_error}}</h3>
+                    {%endfor%}
+                  {% endif %}
+                </div>
+                <!-- /FORM ITEM -->
+
+
+              </div>
+              <!-- /FORM ROW -->
+            </form>
+            <!-- /FORM -->
+          </div>
+          <!-- WIDGET BOX CONTENT -->
+        </div>
+        <!-- /WIDGET BOX -->
+        
+        <!-- SIDEBAR BOX FOOTER -->
+        <div class="sidebar-box-footer">
+          <form id="save-changes-form" method="post" action="{% url 'channel-update' slug=object.slug %}">
+          {%csrf_token%}
+            <!-- BUTTON -->
+            <p id="save-changes-button" style="width:80px;margin-top:5px;float:right" class="button primary">Save</p>
+            <!-- /BUTTON -->
+          </form>
+          <!-- BUTTON -->
+
+          <a id="go-to-channel-button" href={{object.get_absolute_url}} class="button small void">Go to your channel</a>
+
+          <!-- /BUTTON -->
+        </div>
+        <!-- /SIDEBAR BOX FOOTER -->
+      </div>
+      <!-- /GRID COLUMN -->
+    </div>
+    <!-- /GRID COLUMN -->
+  </div>
+  <!-- /GRID -->
+</div>
+<!-- /CONTENT GRID -->
+{% endblock %}
+
+{% block styles %}
+<style>
+#id_username, #id_email{
+  color:rgba(211, 211, 211, 0.445);
+}
+</style>
+{% endblock %}
+{%block scripts%}
+<script src="{% static 'js/channel_update.js' %}" type="text/javascript"></script>
+{% endblock %}

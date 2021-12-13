@@ -1,0 +1,470 @@
+{% extends 'anime/base.html' %}
+{% load static %}
+{%load imagekit_url%}
+{% load humanize %}
+{% block content %}
+
+<!-- CONTENT GRID -->
+<div class="content-grid full">
+  <!-- POST OPEN -->
+  <article class="post-open">
+    <!-- POST OPEN COVER -->
+    <figure class="post-open-cover liquid">
+      <img style="width:100%;height:auto;object-fit:cover" src="{{object.channel.channel_cover.name|change_to_imagekit_url}}" alt="cover-19">
+    </figure>
+    <!-- /POST OPEN COVER -->
+
+    <!-- POST OPEN BODY -->
+    <div class="post-open-body">
+      <!-- POST OPEN HEADING -->
+      <div class="post-open-heading">
+        <!-- POST OPEN TIMESTAMP -->
+        <p class="post-open-timestamp"><span class="highlighted">{{object.timestamped|naturalday}}</span>by <a
+            href="{{object.author.profile.get_absolute_url}}"> {{object.author.username}}</a> from channel <a
+            href="{{object.channel.get_absolute_url}}"> {{object.channel.name}}</a> </p>
+        <!-- /POST OPEN TIMESTAMP -->
+
+        <!-- POST OPEN TITLE -->
+        <h2 class="post-open-title">{{object.title|urlize|url_target_blank}}</h2>
+        <!-- /POST OPEN TITLE -->
+
+      </div>
+      <!-- /POST OPEN HEADING -->
+
+      <!-- POST OPEN CONTENT -->
+      <div style="margin-top:5px" class="post-open-content">
+
+
+        <!-- POST OPEN CONTENT BODY -->
+        <div class="post-open-content-body">
+          <!-- POST OPEN PARAGRAPH -->
+          <p class="post-open-paragraph">{{object.content|urlize|url_target_blank}}</p>
+          <!-- /POST OPEN PARAGRAPH -->
+          {%if object.image%}
+          <img style="border-radius:12px;max-width:100%" src="{{object.image.name|change_to_imagekit_url}}"></img>
+          {%endif%}
+        </div>
+        <!-- /POST OPEN CONTENT BODY -->
+
+      </div>
+      <!-- /POST OPEN CONTENT -->
+
+
+      <!-- POST OPTIONS -->
+      <div class="post-options">
+        <!-- POST OPTION WRAP -->
+        <div class="post-option-wrap">
+          <!-- POST OPTION -->
+          <div data-what-type="post" data-what-id="{{object.id}}" class="post-option reaction-options-dropdown-trigger">
+            <!-- POST OPTION ICON -->
+            {%csrf_token%}
+            <div style="margin-right:15px" class="vote-wrapper" id="upvote-wrapper">
+              {% if user.is_authenticated %}
+              <img onclick="vote(this)" data-vote-type="upvote" style="margin-right:0px"
+                src="{% static 'img/upvote.svg' %}"
+                class="vote upvote {% ifequal vote_value 1 %} upvoted {% endifequal %} post-option-icon icon-thumbs-up">
+              {%else %}
+              <a href="{% url 'login' %}" style="margin-right:15px" class="vote-wrapper" id="upvote-wrapper">
+                <img data-vote-type="upvote" style="margin-right:0px" src="{% static 'img/upvote.svg' %}"
+                  class="vote upvote post-option-icon icon-thumbs-up">
+                <!-- /POST OPTION ICON -->
+              </a>
+              {%endif%}
+              <!-- /POST OPTION ICON -->
+            </div>
+            <!-- POST OPTION TEXT -->
+            <p class="post-option-text vote-score" style="font-size:17px">{{object.score}}</p>
+            <!-- /POST OPTION TEXT -->
+
+            <!-- POST OPTION ICON -->
+            <div style="margin-left:15px" class="vote-wrapper" id="downvote-wrapper">
+              {% if user.is_authenticated%}
+              <img onclick="vote(this)" data-vote-type="downvote" style="margin-left:0px"
+                src="{% static 'img/upvote.svg' %}" style="margin-left:15px;margin-right:0px"
+                class="vote downvote {% ifequal vote_value -1 %} downvoted {% endifequal %} post-option-icon icon-thumbs-up">
+              {%else%}
+              <a href="{% url 'login' %}" style="margin-left:15px" class="vote-wrapper" id="downvote-wrapper">
+                <img data-vote-type="downvote" style="margin-left:0px" src="{% static 'img/upvote.svg' %}"
+                  style="margin-left:15px;margin-right:0px" class="vote downvote post-option-icon icon-thumbs-up">
+              </a>
+              {%endif%}
+            </div>
+            <!-- /POST OPTION ICON -->
+          </div>
+          <!-- /POST OPTION -->
+
+        </div>
+        <!-- /POST OPTION WRAP -->
+
+        <!-- POST OPTION -->
+        <a href="#" class="post-option active">
+          <!-- POST OPTION ICON -->
+          <svg class="post-option-icon icon-comment">
+            <use xlink:href="#svg-comment"></use>
+          </svg>
+          <!-- /POST OPTION ICON -->
+
+          <!-- POST OPTION TEXT -->
+          <p class="post-option-text">Comments</p>
+          <!-- /POST OPTION TEXT -->
+        </a>
+        <!-- /POST OPTION -->
+
+        <!-- POST OPTION -->
+        <div class="post-option">
+          <!-- POST OPTION ICON -->
+          <svg class="post-option-icon icon-share">
+            <use xlink:href="#svg-share"></use>
+          </svg>
+          <!-- /POST OPTION ICON -->
+
+          <!-- POST OPTION TEXT -->
+          <p class="post-option-text">Share</p>
+          <!-- /POST OPTION TEXT -->
+        </div>
+        <!-- /POST OPTION -->
+      </div>
+      <!-- /POST OPTIONS -->
+
+      <!-- POST COMMENT LIST -->
+      <div id="comments" class="post-comment-list">
+        <!-- POST COMMENT -->
+        {% for comment in comments %}
+        <div id="comment_{{comment.id}}" class="post-comment">
+          <!-- USER AVATAR -->
+          <a class="user-avatar small no-outline" href="{{comment.author.profile.get_absolute_url}}">
+            <!-- USER AVATAR CONTENT -->
+            <div class="user-avatar-content">
+              <!-- HEXAGON -->
+              <img style="border-radius:50%;width:40px;height:40px;object-fit:cover"
+                src="{{comment.author.profile.avatar.name|change_to_imagekit_url}}"></img>
+              <!-- /HEXAGON -->
+            </div>
+            <!-- /USER AVATAR CONTENT -->
+
+          </a>
+          <!-- /USER AVATAR -->
+
+          <!-- POST COMMENT TEXT -->
+          <p class="post-comment-text"><a class="post-comment-text-author"
+              href="{{comment.author.profile.get_absolute_url}}">{{comment.author.username}}</a><span
+              class="comment-content">{{comment.content|urlize|url_target_blank}}</span></p>
+          <!-- /POST COMMENT TEXT -->
+
+          <!-- CONTENT ACTIONS -->
+          <div class="content-actions">
+            <!-- CONTENT ACTION -->
+            <div class="content-action">
+              <!-- META LINE -->
+              <div class="meta-line">
+                <!-- META LINE LINK -->
+                <p class="comment-reply meta-line-link light">Reply</p>
+                <!-- /META LINE LINK -->
+              </div>
+              <!-- /META LINE -->
+
+              <!-- META LINE -->
+              <div class="meta-line">
+                <!-- META LINE TIMESTAMP -->
+                <p class="meta-line-timestamp">{{comment.timestamped|naturaltime}}</p>
+                <!-- /META LINE TIMESTAMP -->
+              </div>
+              <!-- /META LINE -->
+
+            </div>
+            <!-- /CONTENT ACTION -->
+
+          </div>
+          <!-- /CONTENT ACTIONS -->
+          {% comment %} ---------------------------------------------- {% endcomment %}
+          <div class="subcomments-list">
+            {% if comment.subcomment_set.all %}
+            {% for subcomment in comment.subcomment_set.all %}
+            <div id="subcomment_{{subcomment.id}}" class="subcomment">
+              <!-- USER AVATAR -->
+              <a style="margin-right:10px" class="user-avatar small no-outline"
+                href="{{subcomment.author.profile.get_absolute_url}}">
+                <!-- USER AVATAR CONTENT -->
+                <div class="user-avatar-content">
+                  <!-- HEXAGON -->
+                  <img style="border-radius:50%;width:40px;height:40px;object-fit:cover"
+                    src="{{subcomment.author.profile.avatar.name|change_to_imagekit_url}}">
+                  <!-- /HEXAGON -->
+                </div>
+                <!-- /USER AVATAR CONTENT -->
+
+              </a>
+              <!-- /USER AVATAR -->
+
+              <!-- POST COMMENT TEXT -->
+              <p class="post-comment-text"><a class="post-comment-text-author"
+                  href="{{subcomment.author.profile.get_absolute_url}}">{{subcomment.author.username}}</a><br><span
+                  class="comment-content">{{subcomment.content|urlize|url_target_blank}}</span></p>
+              <!-- /POST COMMENT TEXT -->
+
+              <!-- CONTENT ACTIONS -->
+              <div style="margin-top:6px" class="content-actions">
+                <!-- CONTENT ACTION -->
+                <div class="content-action">
+                  <!-- META LINE -->
+                  <div class="meta-line">
+                    <!-- META LINE LINK -->
+                    <p class="meta-line-link light"></p>
+                    <!-- /META LINE LINK -->
+                  </div>
+                  <!-- /META LINE -->
+
+                  <!-- META LINE -->
+                  <div class="meta-line">
+                    <!-- META LINE TIMESTAMP -->
+                    <p style="padding-left:29px" class="meta-line-timestamp">{{subcomment.timestamped|naturaltime}}</p>
+                    <!-- /META LINE TIMESTAMP -->
+                  </div>
+                  <!-- /META LINE -->
+
+                </div>
+                <!-- /CONTENT ACTION -->
+              </div>
+              <!-- /CONTENT ACTIONS -->
+            </div>
+            {% endfor %}
+            {% endif %}
+          </div>
+          <form method="post" action="{% url 'create-subcomment' %}" style="display: none" class="subcomment-input-form"
+            data-parent-comment-id="{{comment.id}}">
+            {%csrf_token %}
+            <input type="text" class="subcomment-input">
+            <input style="margin-top:15px;float: right;width:60px" class="subcomment-button button small secondary"
+              type="submit" value=" Submit ">
+            <div>
+              <div style="display:hidden;height:40px"></div>
+            </div>
+          </form>
+        </div>
+        {%endfor%}
+
+        <!-- /POST COMMENT -->
+
+
+        {%if user.is_authenticated%}
+        <!-- POST COMMENT FORM -->
+        <div class="post-comment-form">
+          <!-- USER AVATAR -->
+          <div class="user-avatar small no-outline">
+            <!-- USER AVATAR CONTENT -->
+            <div class="user-avatar-content">
+              <!-- HEXAGON -->
+              <img style="width:40px;height:40px;object-fit:cover;border-radius:50%"
+                src="{{user.profile.avatar.name|change_to_imagekit_url}}"></img>
+              <!-- /HEXAGON -->
+            </div>
+            <!-- /USER AVATAR CONTENT -->
+
+
+          </div>
+          <!-- /USER AVATAR -->
+
+          <!-- FORM -->
+          <form id="comment-submit-form" method="post" action="{{request.path}}comment-submit/" class="form">
+            {% csrf_token %}
+            <!-- FORM ROW -->
+            <div class="form-row">
+              <!-- FORM ITEM -->
+              <div class="form-item">
+                <!-- FORM INPUT -->
+                <div class="form-input small">
+                  <label for="post-reply">Comment</label>
+                  <textarea name="content" cols="40" rows="10" required="" id="id_content"
+                    spellcheck="false"></textarea>
+                </div>
+                <input style="margin-top:15px;float: right;width:60px" class="button small secondary"
+                  id="comment-submit-button" type="submit" value=" Submit ">
+                <!-- /FORM INPUT -->
+              </div>
+              <!-- /FORM ITEM -->
+            </div>
+            <!-- /FORM ROW -->
+          </form>
+          <!-- /FORM -->
+        </div>
+        <!-- /POST COMMENT FORM -->
+        {%endif%}
+      </div>
+      <!-- /POST COMMENT LIST -->
+    </div>
+    <div style="display:block;height:100px">
+      <div style="display:hidden;">
+      </div>
+    </div>
+
+    <!-- /POST OPEN BODY -->
+  </article>
+  <!-- /POST OPEN -->
+
+</div>
+<!-- /CONTENT GRID -->
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/utils/Autolinker.min.js' %}"></script>
+<script src="{% static 'js/vote.js' %}"></script>
+{%if user.is_authenticated%}
+<script type="text/javascript">
+  $(document).ready(function () {
+    var csrf = $("input[name=csrfmiddlewaretoken").val();
+    $("#comment-submit-form").on('submit', function (e) {
+      e.preventDefault();
+      var createCommentUrl = $("#comment-submit-form").attr('action')
+      var commentContent = $("#id_content").val()
+      $.ajax({
+        url: createCommentUrl,
+        type: 'post',
+        data: {
+          content: commentContent,
+          csrfmiddlewaretoken: csrf
+        },
+        success: function (data) {
+
+          comment_content = $("#id_content").val()
+          comment_html_with_link = Autolinker.link(comment_content,{newWindow:true})
+          var commentHtml = `
+                    <div id="comment_${data.new_comment_id}" class="post-comment newlyAddedComment">
+                    <!-- USER AVATAR -->
+                    <a style="margin-right:10px" class="user-avatar small no-outline" href="{{ user.profile.get_absolute_url }}">
+                      <!-- USER AVATAR CONTENT -->
+                      <div class="user-avatar-content">
+                        <!-- HEXAGON -->
+                        <img style="border-radius:50%;width:40px;height:40px;object-fit:cover" src="{{request.user.profile.avatar.name|change_to_imagekit_url}}"></img>
+                        <!-- /HEXAGON -->
+                      </div>
+                      <!-- /USER AVATAR CONTENT -->
+
+                    </a>
+                    <!-- /USER AVATAR -->
+
+                    <!-- POST COMMENT TEXT -->
+                    <p class="post-comment-text"><a class="post-comment-text-author" href="{{user.profile.get_absolute_url}}">{{request.user.username}}</a>${comment_html_with_link}</p>
+                    <!-- /POST COMMENT TEXT -->
+
+                    <!-- CONTENT ACTIONS -->
+                    <div class="content-actions">
+                      <!-- CONTENT ACTION -->
+                      <div class="content-action">
+
+                        <!-- META LINE -->
+                        <div class="meta-line">
+                          <!-- META LINE LINK -->
+                          <p class="comment-reply meta-line-link light">Reply</p>
+                          <!-- /META LINE LINK -->
+                        </div>
+                        <!-- /META LINE -->
+
+                        <!-- META LINE -->
+                        <div class="meta-line">
+                          <!-- META LINE TIMESTAMP -->
+                          <p class="meta-line-timestamp">Just now</p>
+                          <!-- /META LINE TIMESTAMP -->
+                        </div>
+                        <!-- /META LINE -->
+
+                      </div>
+                      <!-- /CONTENT ACTION -->
+                    </div>
+                    <!-- /CONTENT ACTIONS -->
+                    <div class="subcomments-list"></div>
+                      <form method="post" action="{% url 'create-subcomment' %}" style="display: none" class="subcomment-input-form" data-parent-comment-id="${data.new_comment_id}">
+                      {%csrf_token %}
+                        <input type="text" class="subcomment-input">
+                        <input style="margin-top:15px;float: right;width:60px" class="subcomment-button button small secondary"
+                        type="submit" value=" Submit ">
+                        <div>
+                          <div style="display:hidden;height:40px"></div>
+                        </div>
+                      </form>
+                  </div>`;
+          newCommentHtml = commentHtml.replace(new RegExp(/(^|[^@\w])@(\w{1,15})\b/g),
+            '$1<span style="color:green">@$2</span>');
+          commentHtml = newCommentHtml;
+          $("#id_content").val('');
+          $('.post-comment-list').prepend(commentHtml);
+          $('.newlyAddedComment:first')[0].scrollIntoView({
+            'block': 'center'
+          });
+        }
+      })
+    })
+    $('.post-comment-list').on('submit', '.subcomment-input-form', function (e) {
+      var $subcommentList = $(this).parent().children('.subcomments-list')
+      e.preventDefault();
+      $.ajax({
+        url: $(this).attr('action'),
+        type: 'POST',
+        data: {
+          csrfmiddlewaretoken: $(this).find('input[name=csrfmiddlewaretoken]').val(),
+          content: $(this).find('.subcomment-input').val(),
+          parent_comment_id: $(this).attr('data-parent-comment-id')
+        },
+        success: function (data) {
+          subcommentContent = data.content;
+          subcomment_html_with_link = Autolinker.link(subcommentContent,{newWindow:true})
+          newSubCommentHtml = `            <div class="subcomment newlyAddedSubComment">
+              <!-- USER AVATAR -->
+              <a style="margin-right:10px" class="user-avatar small no-outline" href="{{user.profile.get_absolute_url}}">
+                <!-- USER AVATAR CONTENT -->
+                <div class="user-avatar-content">
+                  <!-- HEXAGON -->
+                  <img style="border-radius:50%;width:40px;height:40px;object-fit:cover"
+                    src="{{request.user.profile.avatar.name|change_to_imagekit_url}}"></img>
+                  <!-- /HEXAGON -->
+                </div>
+                <!-- /USER AVATAR CONTENT -->
+
+              </a>
+              <!-- /USER AVATAR -->
+
+              <!-- POST COMMENT TEXT -->
+              <p class="post-comment-text"><a class="post-comment-text-author"
+                  href={{request.user.profile.get_absolute_url}}">{{request.user.username}}</a><br>${subcomment_html_with_link}</p>
+              <!-- /POST COMMENT TEXT -->
+
+              <!-- CONTENT ACTIONS -->
+              <div style="margin-top:6px" class="content-actions">
+                <!-- CONTENT ACTION -->
+                <div class="content-action">
+                  <!-- META LINE -->
+                  <div class="meta-line">
+                    <!-- META LINE LINK -->
+                    <p class="meta-line-link light"></p>
+                    <!-- /META LINE LINK -->
+                  </div>
+                  <!-- /META LINE -->
+
+                  <!-- META LINE -->
+                  <div class="meta-line">
+                    <!-- META LINE TIMESTAMP -->
+                    <p style="padding-left:27px" class="meta-line-timestamp">Just now</p>
+                    <!-- /META LINE TIMESTAMP -->
+                  </div>
+                  <!-- /META LINE -->
+
+                </div>
+                <!-- /CONTENT ACTION -->
+              </div>
+              <!-- /CONTENT ACTIONS -->
+            </div>`
+          newSubCommentHtmlWithRegex = newSubCommentHtml.replace(new RegExp(/(^|[^@\w])@(\w{1,15})\b/g),
+            '$1<span style="color:green">@$2</span>');
+          newSubCommentHtml = newSubCommentHtmlWithRegex;
+          $(".subcomment-input-form").css('display', 'none')
+
+          $subcommentList.prepend(newSubCommentHtml);
+          $('.newlyAddedSubComment:first')[0].scrollIntoView({
+            'block': 'center'
+          });
+        }
+      })
+    })
+  })
+</script>
+{%endif%}
+<script type="text/javascript" src="{% static 'js/post-detail.js' %}"></script>
+{% endblock %}

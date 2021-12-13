@@ -1,0 +1,306 @@
+{% extends "anime/base.html" %}
+{% load static %}
+{%load humanize%}
+
+{% load imagekit_url %}
+{%block active_nav_newsfeed%}active{%endblock%}
+{%block active_mobile_nav_newsfeed%}active{%endblock%}
+{%block active_small_nav_newsfeed%}active{%endblock%}
+{% block content %}
+<div class="content-grid" style="transform: translate(0px, 0px); transition: transform 0.4s ease-in-out 0s;">
+  <!-- SECTION BANNER -->
+  <div class="section-banner">
+    <!-- SECTION BANNER ICON -->
+    <img class="section-banner-icon" src="{% static 'img/banner/newsfeed-icon.png' %}" alt="newsfeed-icon">
+    <!-- /SECTION BANNER ICON -->
+
+    <!-- SECTION BANNER TITLE -->
+    <p class="section-banner-title">Newsfeed</p>
+    <!-- /SECTION BANNER TITLE -->
+
+
+  </div>
+  <!-- /SECTION BANNER -->
+
+  <!-- GRID -->
+  <div class="grid grid-3-6-3 mobile-prefer-content">
+    <!-- GRID COLUMN -->
+    <div class="grid-column">
+      <!-- WIDGET IMAGE BOX -->
+      <div style="padding:0" class="widget-box">
+      <img style="border-radius:12px;max-width:100%;height:700px;object-fit:cover" src="{% static 'img/christmas2.webp' %}">
+      </div>
+{#      #}
+{#      <div style="padding:0" class="widget-box">#}
+{#      <img style="border-radius:12px;max-width:100%;height:700px;object-fit:cover" src="{% static 'img/banner2.webp' %}" alt="">#}
+{#      </div>#}
+{##}
+{#      <div style="padding:0" class="widget-box">#}
+{#      <img style="border-radius:12px;max-width:100%;height:700px;object-fit:cover" src="{% static 'img/banner3.webp' %}">#}
+{#      </div>#}
+      <!-- /WIDGET IMAGE BOX -->
+    </div>
+    <!-- /GRID COLUMN -->
+
+    <!-- GRID COLUMN -->
+    <div class="grid-column">
+      <!-- SIMPLE TAB ITEMS -->
+      <div class="simple-tab-items">
+        <!-- FORM -->
+        <form class="form">
+          <!-- FORM SELECT -->
+          <div class="form-select">
+            <select id="newsfeed-filter-category" name="newsfeed_filter_category">
+              <option value="0">Hot Posts</option>
+            </select>
+            <!-- FORM SELECT ICON -->
+            <svg class="form-select-icon icon-small-arrow">
+              <use xlink:href="#svg-small-arrow"></use>
+            </svg>
+            <!-- /FORM SELECT ICON -->
+          </div>
+          <!-- /FORM SELECT -->
+        </form>
+        <!-- /FORM -->
+
+        <!-- SIMPLE TAB ITEM -->
+        <p class="simple-tab-item active">Hot Posts</p>
+        <!-- /SIMPLE TAB ITEM -->
+
+      </div>
+      <!-- /SIMPLE TAB ITEMS -->
+    <div style="margin: 0 auto">
+      <div style="display: inline-block">
+          <a href="{% url 'channel-create' %}" style="margin-right:12px;color:white;width:160px" class="button medium primary">Create channel</a>
+          <a href="{% url 'channel-search' %}?q=" style="color:white;width:160px" class="button medium secondary">Create post</a>
+      </div>
+    </div>
+      <div class='infinite-container post-container'>
+      {% for item in posts %}
+      {% csrf_token %}
+        <!-- widget box -->
+        <div style="margin:20px 0px 20px 0px" class="infinite-item widget-box no-padding post-item">
+        {%ifequal item.0.author user%}
+        <!-- WIDGET BOX SETTINGS -->
+        <div class="widget-box-settings">
+          <!-- POST SETTINGS WRAP -->
+          <div class="post-settings-wrap" style="position: relative;">
+            <!-- POST SETTINGS -->
+            <div class="post-settings widget-box-post-settings-dropdown-trigger">
+              <!-- POST SETTINGS ICON -->
+              <svg class="post-settings-icon icon-more-dots">
+                <use xlink:href="#svg-more-dots"></use>
+              </svg>
+              <!-- /POST SETTINGS ICON -->
+            </div>
+            <!-- /POST SETTINGS -->
+
+            <!-- SIMPLE DROPDOWN -->
+            <div class="simple-dropdown widget-box-post-settings-dropdown"
+              style="position: absolute; z-index: 9999; top: 30px; right: 9px; opacity: 0; visibility: hidden; transform: translate(0px, -20px); transition: transform 0.3s ease-in-out 0s, opacity 0.3s ease-in-out 0s, visibility 0.3s ease-in-out 0s;">
+              <!-- SIMPLE DROPDOWN LINK -->
+              <a style="color:white" href="{% url 'post-update' item.0.channel.slug item.0.pk %}" class="simple-dropdown-link">Edit</a>
+              <!-- /SIMPLE DROPDOWN LINK -->
+              <form method="POST" action="{% url 'post-delete' slug=item.0.channel.slug pk=item.0.pk %}">
+                <!-- SIMPLE DROPDOWN LINK -->
+                {%csrf_token %}
+                <input type="submit" style="color:#ff4d4d;background-color: Transparent;"class="simple-dropdown-link" value="Delete" />
+                <!-- /SIMPLE DROPDOWN LINK -->
+              </form>
+            </div>
+            <!-- /SIMPLE DROPDOWN -->
+          </div>
+          <!-- /POST SETTINGS WRAP -->
+        </div>
+        <!-- /WIDGET BOX SETTINGS -->
+        {%endifequal%}
+          <!-- WIDGET BOX STATUS -->
+          <div class="widget-box-status">
+            <!-- WIDGET BOX STATUS CONTENT -->
+            <div class="widget-box-status-content">
+              <!-- USER STATUS -->
+              <div class="user-status">
+                <!-- USER STATUS AVATAR -->
+                <a href="{{item.0.author.profile.get_absolute_url}}" class="user-status-avatar">
+                  <!-- USER AVATAR -->
+                  <div class="user-avatar small no-outline">
+                    <!-- USER AVATAR CONTENT -->
+                    <div class="user-avatar-content">
+                      <!-- HEXAGON -->
+                      <img style="border-radius:50%;width:40px;height:40px"
+                        src="{{item.0.author.profile.avatar.name|change_to_imagekit_url}}"></img>
+                      <!-- /HEXAGON -->
+                    </div>
+                    <!-- /USER AVATAR CONTENT -->
+
+                  </div>
+                  <!-- /USER AVATAR -->
+                </a>
+                <!-- /USER STATUS AVATAR -->
+
+                <!-- USER STATUS TITLE -->
+                <p style="margin-top:5px" class="user-status-title medium"><a class="bold"
+                    href="{{item.0.author.profile.get_absolute_url}}">{{item.0.author.username}}</a> from channel <a class="bold"
+                    href="{{item.0.channel.get_absolute_url}}">{{item.0.channel.name}}</a></p>
+                <!-- /USER STATUS TITLE -->
+
+                <!-- USER STATUS TEXT -->
+                <p class="user-status-text small">{{item.0.timestamped|naturaltime}}</p>
+                <!-- /USER STATUS TEXT -->
+              </div>
+              <!-- /USER STATUS -->
+
+              <!-- WIDGET BOX STATUS TEXT -->
+              <h2 class="post-title-text" style="margin-top:20px;margin-bottom:12px;font-size:25px;">{{item.0.title|urlize|url_target_blank}}</h2>
+              <p class="widget-box-status-text" style="margin-bottom:5px;font-size:20px">{{item.0.content|urlize|url_target_blank}}</p>
+              <!-- /WIDGET BOX STATUS TEXT -->
+
+            </div>
+            <!-- /WIDGET BOX STATUS CONTENT -->
+          </div>
+          <!-- /WIDGET BOX STATUS -->
+          {%if item.0.image %}
+          <img loading="lazy" style="border-top-left-radius:12px;border-top-right-radius:12px;max-width:100%" src="{{item.0.image.name|change_to_imagekit_url}}"></img>
+
+
+          {%endif%}
+          <!-- POST OPTIONS -->
+          <div class="post-options">
+            <!-- POST OPTION WRAP -->
+            <div class="post-option-wrap">
+              <!-- POST OPTION -->
+              <div data-previous-vote="{{item.1}}" data-what-type="post" data-what-id="{{item.0.id}}"
+                class="post-option reaction-options-dropdown-trigger">
+                <!-- POST OPTION ICON -->
+                {%csrf_token%}
+                {%if user.is_authenticated%}
+                <div style="margin-right:15px" class="vote-wrapper" id="upvote-wrapper">
+                  <img onclick="vote(this)" data-vote-type="upvote" style="margin-right:0px"
+                    src="{% static 'img/upvote.svg' %}"
+                    class="vote upvote {% ifequal item.1 1 %} upvoted {% endifequal %} post-option-icon icon-thumbs-up"></img>
+                  <!-- /POST OPTION ICON -->
+                </div>
+                {%else%}
+                <a href="{% url 'login' %}" style="margin-right:15px" class="vote-wrapper" id="upvote-wrapper">
+                  <img data-vote-type="upvote" style="margin-right:0px" src="{% static 'img/upvote.svg' %}"
+                    class="vote upvote post-option-icon icon-thumbs-up"></img>
+                  <!-- /POST OPTION ICON -->
+                </a>
+                {%endif%}
+                <!-- POST OPTION TEXT -->
+                <p class="post-option-text vote-score" style="font-size:17px">{{item.0.score}}</p>
+                <!-- /POST OPTION TEXT -->
+
+                <!-- POST OPTION ICON -->
+                {% if user.is_authenticated %}
+                <div style="margin-left:15px" class="vote-wrapper" id="downvote-wrapper">
+                  <img onclick="vote(this)" data-vote-type="downvote" style="margin-left:0px"
+                    src="{% static 'img/upvote.svg' %}" style="margin-left:15px;margin-right:0px"
+                    class="vote downvote {% ifequal item.1 -1 %} downvoted {% endifequal %} post-option-icon icon-thumbs-up"></img>
+                </div>
+                {%else %}
+                <a href="{% url 'login' %}" style="margin-left:15px" class="vote-wrapper" id="downvote-wrapper">
+                  <img data-vote-type="downvote" style="margin-left:0px" src="{% static 'img/upvote.svg' %}"
+                    style="margin-left:15px;margin-right:0px"
+                    class="vote downvote post-option-icon icon-thumbs-up"></img>
+                </a>
+                {%endif%}
+                <!-- /POST OPTION ICON -->
+              </div>
+              <!-- /POST OPTION -->
+
+            </div>
+            <!-- /POST OPTION WRAP -->
+
+            <!-- POST OPTION -->
+            <a href="{{item.0.get_absolute_url}}" class="post-option">
+              <!-- POST OPTION ICON -->
+              <svg class="post-option-icon icon-comment">
+                <use xlink:href="#svg-comment"></use>
+              </svg>
+              <!-- /POST OPTION ICON -->
+
+              <!-- POST OPTION TEXT -->
+              <p class="post-option-text">{{item.0.comment_set.count}} Comments</p>
+              <!-- /POST OPTION TEXT -->
+            </a>
+            <!-- /POST OPTION -->
+
+            <!-- POST OPTION -->
+            <div class="post-option">
+              <!-- POST OPTION ICON -->
+              <svg class="post-option-icon icon-share">
+                <use xlink:href="#svg-share"></use>
+              </svg>
+              <!-- /POST OPTION ICON -->
+
+              <!-- POST OPTION TEXT -->
+              <p class="post-option-text">Share</p>
+              <!-- /POST OPTION TEXT -->
+            </div>
+            <!-- /POST OPTION -->
+          </div>
+          <!-- /POST OPTIONS -->
+
+        </div>
+        <!-- Widget Box  /-->
+      {% endfor %}
+      </div>
+
+
+      {% if page_obj.has_next %}
+      <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+      {% endif %}
+      <!-- LOADER BARS -->
+      <div style="display: none" class="loader-bars">
+        <div class="loader-bar"></div>
+        <div class="loader-bar"></div>
+        <div class="loader-bar"></div>
+        <div class="loader-bar"></div>
+        <div class="loader-bar"></div>
+        <div class="loader-bar"></div>
+        <div class="loader-bar"></div>
+        <div class="loader-bar"></div>
+      </div>
+      <!-- /LOADER BARS -->
+    </div>
+    <!-- /GRID COLUMN -->
+
+    <!-- GRID COLUMN -->
+    <div class="grid-column">
+
+
+      <!-- WIDGET BOX -->
+              <div style="padding:0" class="widget-box">
+      <img style="border-radius:12px;max-width:100%;height:700px;object-fit:cover" src="{% static 'img/christmas.webp' %}" alt="">
+      </div>
+{#      <div style="padding:0" class="widget-box">#}
+{#      <img style="border-radius:12px;max-width:100%;height:700px;object-fit:cover" src="{% static 'img/banner10.webp' %}">#}
+{#      </div>#}
+{#      <!-- /WIDGET BOX -->#}
+{#      <!-- WIDGET BOX -->#}
+{#      <div style="padding:0" class="widget-box">#}
+{#      <img style="border-radius:12px;max-width:100%;height:700px;object-fit:cover" src="{% static 'img/banner5.webp' %}">#}
+{#      </img>#}
+{#      </div>#}
+{#      <!-- /WIDGET BOX -->#}
+{#      <!-- WIDGET BOX -->#}
+{#      <div style="padding:0" class="widget-box">#}
+{#      <img style="border-radius:12px;max-width:100%;height:700px;object-fit:cover" src="{% static 'img/banner6.webp' %}">#}
+{#      </img>#}
+{#      </div>#}
+      <!-- /WIDGET BOX -->
+    </div>
+    <!-- /GRID COLUMN -->
+  </div>
+  <!-- /GRID -->
+</div>
+{% endblock %}
+
+
+{%block scripts%}
+<script type="text/javascript" src="{% static 'js/vote.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/infinite.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/infiniteload.js' %}"></script>
+{%endblock%}

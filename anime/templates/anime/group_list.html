@@ -1,0 +1,128 @@
+{% extends 'anime/base.html' %}
+{% load static %}
+{%load imagekit_url%}
+{%block active_nav_channel %}active{% endblock %}
+{%block active_mobile_nav_channels%}active{%endblock%}
+{%block active_small_nav_channel%}active{% endblock %}
+{%block content %}
+  <!-- CONTENT GRID -->
+  <div class="content-grid">
+    <!-- SECTION BANNER -->
+    <div class="section-banner">
+      <!-- SECTION BANNER ICON -->
+      <img class="section-banner-icon" src="{% static 'img/banner/groups-icon.png' %}" alt="groups-icon">
+      <!-- /SECTION BANNER ICON -->
+  
+      <!-- SECTION BANNER TITLE -->
+      <p class="section-banner-title">Channels</p>
+      <!-- /SECTION BANNER TITLE -->
+  
+      <!-- SECTION BANNER TEXT -->
+      <p class="section-banner-text">Browse all the groups of the community!</p>
+      <!-- /SECTION BANNER TEXT -->
+    </div>
+    <!-- /SECTION BANNER -->
+
+
+    <!-- GRID -->
+    <div class="grid grid-4-4-4 centered">
+        {%if channels%}
+            {%for channel in channels%}
+            <!-- USER PREVIEW -->
+            <div class="user-preview">
+                <!-- USER PREVIEW COVER -->
+                <figure class="user-preview-cover liquid">
+                <img src="{{channel.channel_cover.name|change_to_imagekit_url}}" alt="channel cover">
+                </figure>
+                <!-- /USER PREVIEW COVER -->
+            
+                <!-- USER PREVIEW INFO -->
+                <div class="user-preview-info">
+                <!-- TAG STICKER -->
+                <div class="tag-sticker">
+                    <!-- TAG STICKER ICON -->
+                    <svg class="tag-sticker-icon icon-public">
+                    <use xlink:href="#svg-public"></use>
+                    </svg>
+                    <!-- /TAG STICKER ICON -->
+                </div>
+                <!-- /TAG STICKER -->
+            
+                <!-- USER SHORT DESCRIPTION -->
+                <div class="user-short-description">
+                    <!-- USER SHORT DESCRIPTION AVATAR -->
+                    <a class="user-short-description-avatar user-avatar medium no-stats" href="{{channel.get_absolute_url}}">
+            
+                    <!-- USER AVATAR CONTENT -->
+                    <div class="user-avatar-content">
+                        <!-- HEXAGON -->
+                        <img style="border-radius:50%;width:100px;height:100px;object-fit:cover"src="{{channel.channel_avatar.name|change_to_imagekit_url}}"></img>
+                        <!-- /HEXAGON -->
+                    </div>
+                    <!-- /USER AVATAR CONTENT -->
+                    </a>
+                    <!-- /USER SHORT DESCRIPTION AVATAR -->
+            
+                    <!-- USER SHORT DESCRIPTION TITLE -->
+                    <p class="user-short-description-title"><a href="{{channel.get_absolute_url}}">{{channel.name}}</a></p>
+                    <!-- /USER SHORT DESCRIPTION TITLE -->
+
+                </div>
+                <!-- /USER SHORT DESCRIPTION -->
+            
+                <!-- USER STATS -->
+                <div class="user-stats">
+                    <!-- USER STAT -->
+                    <div class="user-stat">
+                    <!-- USER STAT TITLE -->
+                    <p class="user-stat-title">{{channel.members.count}}</p>
+                    <!-- /USER STAT TITLE -->
+            
+                    <!-- USER STAT TEXT -->
+                    <p class="user-stat-text">members</p>
+                    <!-- /USER STAT TEXT -->
+                    </div>
+                    <!-- /USER STAT -->
+            
+                    <!-- USER STAT -->
+                    <div class="user-stat">
+                    <!-- USER STAT TITLE -->
+                    <p class="user-stat-title">{{channel.post_set.count}}</p>
+                    <!-- /USER STAT TITLE -->
+            
+                    <!-- USER STAT TEXT -->
+                    <p class="user-stat-text">posts</p>
+                    <!-- /USER STAT TEXT -->
+                    </div>
+                    <!-- /USER STAT -->
+            
+                </div>
+                <!-- /USER STATS -->
+            
+
+            
+                <!-- USER PREVIEW ACTIONS -->
+                <div  class="user-preview-actions">
+                    <!-- BUTTON -->
+                    <a href="{{channel.get_absolute_url}}" class="button secondary full">
+                    <!-- BUTTON ICON -->
+                    <svg class="button-icon icon-join-group">
+                        <use xlink:href="#svg-join-group"></use>
+                    </svg>
+                    <!-- /BUTTON ICON -->
+                    Go to channel
+                    </a>
+                    <!-- /BUTTON -->
+                </div>
+                <!-- /USER PREVIEW ACTIONS -->
+                </div>
+                <!-- /USER PREVIEW INFO -->
+            </div>
+            <!-- /USER PREVIEW -->
+            {% endfor %}
+        {% endif %}
+    </div>
+    <!-- /GRID -->
+  </div>
+  <!-- /CONTENT GRID -->
+{%endblock%}

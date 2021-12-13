@@ -1,0 +1,991 @@
+{% load static %}
+{% load humanize %}
+{% load imagekit_url %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- bootstrap 4.3.1 -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/bootstrap.min.css' %}">
+  <!-- styles -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.min.css' %}">
+  <!-- simplebar styles -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/simplebar.css' %}">
+  <!-- tiny-slider styles -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/vendor/tiny-slider.css' %}">
+  <!-- favicon -->
+  <link rel="icon" href="{% static 'img/favicon.ico' %}">
+  <title>Anikon</title>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="header">
+  
+    <!-- HEADER ACTIONS -->
+    <div class="header-actions">
+      <!-- HEADER BRAND -->
+      <div class="header-brand">
+        <!-- LOGO -->
+
+
+        <!-- HEADER BRAND TEXT -->
+        <h1 class="header-brand-text">ANIKON</h1>
+        <!-- /HEADER BRAND TEXT -->
+      </div>
+      <!-- /HEADER BRAND -->
+    </div>
+    <!-- /HEADER ACTIONS -->
+    {%if user.is_authenticated%}
+    <!-- HEADER ACTIONS -->
+    <div class="header-actions">
+      <!-- SIDEMENU TRIGGER -->
+      <div class="sidemenu-trigger navigation-widget-trigger">
+        <!-- ICON GRID -->
+        <svg class="icon-grid">
+          <use xlink:href="#svg-grid"></use>
+        </svg>
+        <!-- /ICON GRID -->
+      </div>
+      <!-- /SIDEMENU TRIGGER -->
+
+      <!-- MOBILEMENU TRIGGER -->
+      <div class="mobilemenu-trigger navigation-widget-mobile-trigger">
+        <!-- BURGER ICON -->
+        <div class="burger-icon inverted">
+          <!-- BURGER ICON BAR -->
+          <div class="burger-icon-bar"></div>
+          <!-- /BURGER ICON BAR -->
+
+          <!-- BURGER ICON BAR -->
+          <div class="burger-icon-bar"></div>
+          <!-- /BURGER ICON BAR -->
+
+          <!-- BURGER ICON BAR -->
+          <div class="burger-icon-bar"></div>
+          <!-- /BURGER ICON BAR -->
+        </div>
+        <!-- /BURGER ICON -->
+      </div>
+      <!-- /MOBILEMENU TRIGGER -->
+
+      <!-- NAVIGATION -->
+      <nav class="navigation">
+        <!-- MENU MAIN -->
+        <ul class="menu-main">
+          <!-- MENU MAIN ITEM -->
+          <li class="menu-main-item">
+            <!-- MENU MAIN ITEM LINK -->
+            <a class="menu-main-item-link" href="{%url 'homepage' %}">Newsfeed</a>
+            <!-- /MENU MAIN ITEM LINK -->
+          </li>
+          <!-- /MENU MAIN ITEM -->
+
+          <!-- MENU MAIN ITEM -->
+          <li class="menu-main-item">
+            <!-- MENU MAIN ITEM LINK -->
+            <a class="menu-main-item-link" href="https://changelog.anikon.fun/" target="_blank">Feedback</a>
+            <!-- /MENU MAIN ITEM LINK -->
+          </li>
+          <!-- /MENU MAIN ITEM -->
+
+          <!-- MENU MAIN ITEM -->
+          <li class="menu-main-item">
+            <!-- MENU MAIN ITEM LINK -->
+            <a class="menu-main-item-link" href="https://changelog.anikon.fun/changelog" target="_blank">Notifications</a>
+            <!-- /MENU MAIN ITEM LINK -->
+          </li>
+          <!-- /MENU MAIN ITEM -->
+        </ul>
+        <!-- /MENU MAIN -->
+      </nav>
+      <!-- /NAVIGATION -->
+    </div>
+    <!-- /HEADER ACTIONS -->
+    
+    <!-- HEADER ACTIONS -->
+    <div class="header-actions search-bar">
+      <!-- INTERACTIVE INPUT -->
+      <div class="interactive-input dark">
+        <input type="text" id="search-main" name="search_main" placeholder="Tìm kiếm channel">
+        <!-- INTERACTIVE INPUT ICON WRAP -->
+        <div class="interactive-input-icon-wrap">
+          <!-- INTERACTIVE INPUT ICON -->
+          <svg class="interactive-input-icon icon-magnifying-glass">
+            <use xlink:href="#svg-magnifying-glass"></use>
+          </svg>
+          <!-- /INTERACTIVE INPUT ICON -->
+        </div>
+        <!-- /INTERACTIVE INPUT ICON WRAP -->
+
+        <!-- INTERACTIVE INPUT ACTION -->
+        <div class="interactive-input-action">
+          <!-- INTERACTIVE INPUT ACTION ICON -->
+          <svg class="interactive-input-action-icon icon-cross-thin">
+            <use xlink:href="#svg-cross-thin"></use>
+          </svg>
+          <!-- /INTERACTIVE INPUT ACTION ICON -->
+        </div>
+        <!-- /INTERACTIVE INPUT ACTION -->
+      </div>
+      <!-- /INTERACTIVE INPUT -->
+
+      <!-- DROPDOWN BOX -->
+      <div class="dropdown-box padding-bottom-small header-search-dropdown">
+        <!-- DROPDOWN BOX CATEGORY -->
+        <div class="dropdown-box-category">
+          <!-- DROPDOWN BOX CATEGORY TITLE -->
+          <p class="dropdown-box-category-title">Channel</p>
+          <!-- /DROPDOWN BOX CATEGORY TITLE -->
+        </div>
+        <!-- /DROPDOWN BOX CATEGORY -->
+
+        <!-- DROPDOWN BOX LIST -->
+        <div class="dropdown-box-list small no-scroll">
+          <div id='channel-list-container'></div>
+        </div>
+        <!-- /DROPDOWN BOX LIST -->
+      </div>
+      <!-- /DROPDOWN BOX -->
+    </div>
+    <!-- /HEADER ACTIONS -->
+
+    <!-- HEADER ACTIONS -->
+    <div class="header-actions">
+      {%if user.is_authenticated %}
+      <!-- PROGRESS STAT -->
+      <div class="progress-stat">
+        <!-- BAR PROGRESS WRAP -->
+        <div class="bar-progress-wrap">
+          <!-- BAR PROGRESS INFO -->
+          <p class="bar-progress-info">Next: <span class="bar-progress-text"></span></p>
+          <!-- /BAR PROGRESS INFO -->
+        </div>
+        <!-- /BAR PROGRESS WRAP -->
+
+        <!-- PROGRESS STAT BAR -->
+        <div id="logged-user-level" class="progress-stat-bar"></div>
+        <!-- /PROGRESS STAT BAR -->
+      </div>
+      <!-- /PROGRESS STAT -->
+      {%endif%}
+    </div>
+    <!-- /HEADER ACTIONS -->
+
+    <!-- HEADER ACTIONS -->
+    <div class="header-actions">
+      <!-- ACTION LIST -->
+      <div class="action-list dark">
+        <!-- ACTION LIST ITEM WRAP -->
+
+        <!-- /ACTION LIST ITEM WRAP -->
+        <!-- ACTION LIST ITEM WRAP -->
+        <div class="action-list-item-wrap">
+          <!-- ACTION LIST ITEM -->
+          <div class="action-list-item header-dropdown-trigger">
+            <!-- ACTION LIST ITEM ICON -->
+            <svg class="action-list-item-icon icon-friend">
+              <use xlink:href="#svg-friend"></use>
+            </svg>
+            <!-- /ACTION LIST ITEM ICON -->
+          </div>
+          <!-- /ACTION LIST ITEM -->
+
+          <!-- DROPDOWN BOX -->
+          <div class="dropdown-box header-dropdown">
+            <!-- DROPDOWN BOX HEADER -->
+            <div class="dropdown-box-header">
+              <!-- DROPDOWN BOX HEADER TITLE -->
+              <p class="dropdown-box-header-title">Friend Requests</p>
+              <!-- /DROPDOWN BOX HEADER TITLE -->
+
+              <!-- DROPDOWN BOX HEADER ACTIONS -->
+              <div class="dropdown-box-header-actions">
+              </div>
+              <!-- /DROPDOWN BOX HEADER ACTIONS -->
+            </div>
+            <!-- /DROPDOWN BOX HEADER -->
+
+            <!-- DROPDOWN BOX LIST -->
+            <div class="dropdown-box-list no-hover" data-simplebar>
+            </div>
+            <!-- /DROPDOWN BOX LIST -->
+
+            <!-- DROPDOWN BOX BUTTON -->
+            <a class="dropdown-box-button secondary" href="hub-profile-requests.html">Comming soon</a>
+            <!-- /DROPDOWN BOX BUTTON -->
+          </div>
+          <!-- /DROPDOWN BOX -->
+        </div>
+        <!-- /ACTION LIST ITEM WRAP -->
+        <!-- ACTION LIST ITEM WRAP -->
+        <div class="action-list-item-wrap">
+          <!-- ACTION LIST ITEM -->
+          <div class="action-list-item header-dropdown-trigger">
+            <!-- ACTION LIST ITEM ICON -->
+            <svg class="action-list-item-icon icon-messages">
+              <use xlink:href="#svg-messages"></use>
+            </svg>
+            <!-- /ACTION LIST ITEM ICON -->
+          </div>
+          <!-- /ACTION LIST ITEM -->
+
+          <!-- DROPDOWN BOX -->
+          <div class="dropdown-box header-dropdown">
+
+
+            <!-- DROPDOWN BOX LIST -->
+            <div class="dropdown-box-list medium" data-simplebar>
+
+            </div>
+            <!-- /DROPDOWN BOX LIST -->
+
+            <!-- DROPDOWN BOX BUTTON -->
+            <a class="dropdown-box-button primary" href="#">Comming soon</a>
+            <!-- /DROPDOWN BOX BUTTON -->
+          </div>
+          <!-- /DROPDOWN BOX -->
+        </div>
+        <!-- /ACTION LIST ITEM WRAP -->
+        <!-- ACTION LIST ITEM WRAP -->
+        <div class="action-list-item-wrap">
+          <!-- ACTION LIST ITEM -->
+          <div id="notification-icon"
+            class="action-list-item {% if number_of_unread_notification %} unread {%endif%} header-dropdown-trigger">
+            <!-- ACTION LIST ITEM ICON -->
+            <svg class="action-list-item-icon icon-notification">
+              <use xlink:href="#svg-notification"></use>
+            </svg>
+            {% csrf_token %}
+            <!-- /ACTION LIST ITEM ICON -->
+          </div>
+          <!-- /ACTION LIST ITEM -->
+
+          <!-- DROPDOWN BOX -->
+          <div class="dropdown-box header-dropdown">
+            <!-- DROPDOWN BOX HEADER -->
+            <div class="dropdown-box-header">
+              <!-- DROPDOWN BOX HEADER TITLE -->
+              <p class="dropdown-box-header-title">Notifications</p>
+              <!-- /DROPDOWN BOX HEADER TITLE -->
+
+              <!-- DROPDOWN BOX HEADER ACTIONS -->
+              <div class="dropdown-box-header-actions">
+              </div>
+              <!-- /DROPDOWN BOX HEADER ACTIONS -->
+            </div>
+            <!-- /DROPDOWN BOX HEADER -->
+
+            <!-- DROPDOWN BOX LIST -->
+            <div id="notification-list" class="dropdown-box-list" data-simplebar>
+
+
+
+
+
+
+              {% for notification in notifications %}
+              <!-- DROPDOWN BOX LIST ITEM -->
+              <div class="notification-item dropdown-box-list-item {% if notification.unread%} unread {%endif%}">
+                <!-- USER STATUS -->
+                <div class="user-status notification">
+                  <!-- USER STATUS AVATAR -->
+                  <a class="user-status-avatar" href="{{notification.actor.profile.get_absolute_url}}">
+                    <!-- USER AVATAR -->
+                    <div class="user-avatar small no-outline">
+                      <!-- USER AVATAR CONTENT -->
+                      <div class="user-avatar-content">
+                        <!-- HEXAGON -->
+                        <img style="width:40px;height:40px;object-fit:cover;border-radius:50%" src="{{notification.actor.profile.avatar.name|change_to_imagekit_url}}"></img>
+                        <!-- /HEXAGON -->
+                      </div>
+                      <!-- /USER AVATAR CONTENT -->
+
+
+                    </div>
+                    <!-- /USER AVATAR -->
+                  </a>
+                  <!-- /USER STATUS AVATAR -->
+
+                  <!-- USER STATUS TITLE -->
+                  <p class="user-status-title"><a class="bold" href="{{notification.actor.profile.get_absolute_url}}">{{notification.actor}} </a>
+                    {%if notification.action_object.parent_comment%}
+                     <a class="highlighted"  href="{{notification.action_object.get_absolute_url}}#comment_{{notification.action_object.parent_comment.id}}">{{notification.verb}}</a></p>
+                    {%else%}
+                    <a class="highlighted" href="{{notification.action_object.get_absolute_url}}#comment_{{notification.action_object.id}}">{{notification.verb}} </a></p>
+                    {%endif%}
+                  <!-- /USER STATUS TITLE -->
+
+                  <!-- USER STATUS TIMESTAMP -->
+                  <p class="user-status-timestamp">{{notification.timestamp|naturaltime}}</p>
+                  <!-- /USER STATUS TIMESTAMP -->
+
+                  <!-- USER STATUS ICON -->
+                  <div class="user-status-icon">
+                    <!-- ICON COMMENT -->
+                    <svg class="icon-comment">
+                      <use xlink:href="#svg-comment"></use>
+                    </svg>
+                    <!-- /ICON COMMENT -->
+                  </div>
+                  <!-- /USER STATUS ICON -->
+                </div>
+                <!-- /USER STATUS -->
+              </div>
+              <!-- /DROPDOWN BOX LIST ITEM -->
+              {%endfor%}
+
+
+            </div>
+            <!-- /DROPDOWN BOX LIST -->
+
+            <!-- DROPDOWN BOX BUTTON -->
+            <a class="dropdown-box-button secondary" href="{% url 'notification' %}">View all Notifications</a>
+            <!-- /DROPDOWN BOX BUTTON -->
+          </div>
+          <!-- /DROPDOWN BOX -->
+        </div>
+        <!-- /ACTION LIST ITEM WRAP -->
+      </div>
+      <!-- /ACTION LIST -->
+      <!-- ACTION ITEM WRAP -->
+      <div class="action-item-wrap">
+        <!-- ACTION ITEM -->
+        <div class="action-item dark header-settings-dropdown-trigger">
+          <!-- ACTION ITEM ICON -->
+          <svg class="action-item-icon icon-settings">
+            <use xlink:href="#svg-settings"></use>
+          </svg>
+          <!-- /ACTION ITEM ICON -->
+        </div>
+        <!-- /ACTION ITEM -->
+
+        <!-- DROPDOWN NAVIGATION -->
+        <div class="dropdown-navigation header-settings-dropdown">
+          <!-- DROPDOWN NAVIGATION HEADER -->
+          <div class="dropdown-navigation-header">
+            <!-- USER STATUS -->
+            <div class="user-status">
+              <!-- USER STATUS AVATAR -->
+              <a class="user-status-avatar" href="{% url 'profile' user.pk %}">
+                <!-- USER AVATAR -->
+                <div class="user-avatar small no-outline">
+                  <!-- USER AVATAR CONTENT -->
+                  <div style="top:4px;left:5px" class="user-avatar-content">
+                    <!-- HEXAGON -->
+                    <img style="width:35px;height:35px;object-fit:cover;border-radius:50%" src="{{user.profile.avatar.name|change_to_imagekit_url}}"></img>
+                    <!-- /HEXAGON -->
+                  </div>
+                  <!-- /USER AVATAR CONTENT -->
+
+
+                </div>
+                <!-- /USER AVATAR -->
+              </a>
+              <!-- /USER STATUS AVATAR -->
+
+              <!-- USER STATUS TITLE -->
+              <p class="user-status-title"><span class="bold">Hi {{user.username}}!</span></p>
+              <!-- /USER STATUS TITLE -->
+
+              <!-- USER STATUS TEXT -->
+              <p class="user-status-text small"><a href="{{user.profile.get_absolute_url}}">@{{user.username}}</a></p>
+              <!-- /USER STATUS TEXT -->
+            </div>
+            <!-- /USER STATUS -->
+          </div>
+          <!-- /DROPDOWN NAVIGATION HEADER -->
+
+          <!-- DROPDOWN NAVIGATION CATEGORY -->
+          <p class="dropdown-navigation-category">Personal information</p>
+          <!-- /DROPDOWN NAVIGATION CATEGORY -->
+
+          <!-- DROPDOWN NAVIGATION LINK -->
+          <a class="dropdown-navigation-link" href="{%url 'account-info' %}">Information</a>
+          <!-- /DROPDOWN NAVIGATION LINK -->
+
+          <!-- DROPDOWN NAVIGATION LINK -->
+          <a class="dropdown-navigation-link" href="{% url 'notification' %}">Notifications</a>
+          <!-- /DROPDOWN NAVIGATION LINK -->
+
+          <!-- DROPDOWN NAVIGATION CATEGORY -->
+          <p class="dropdown-navigation-category">Account</p>
+          <!-- /DROPDOWN NAVIGATION CATEGORY -->
+
+
+          <!-- DROPDOWN NAVIGATION LINK -->
+          <a class="dropdown-navigation-link" href="{% url 'password_change' %}">Change password</a>
+          <!-- /DROPDOWN NAVIGATION LINK -->
+
+          <!-- DROPDOWN NAVIGATION BUTTON -->
+          <a href="{% url 'logout' %}" class="dropdown-navigation-button button small secondary">Sign out</a>
+          <!-- /DROPDOWN NAVIGATION BUTTON -->
+        </div>
+        <!-- /DROPDOWN NAVIGATION -->
+      </div>
+
+      <!-- /ACTION ITEM WRAP -->
+    </div>
+    <!-- /HEADER ACTIONS -->
+    {%else%}
+      <!-- NAVIGATION -->
+      <nav class="navigation">
+        <!-- MENU MAIN -->
+        <ul class="menu-main">
+          <!-- MENU MAIN ITEM -->
+          <li class="menu-main-item">
+            <!-- MENU MAIN ITEM LINK -->
+            <a style="font-size:15px" class="menu-main-item-link" href="{% url 'login' %}">Login</a>
+            <!-- /MENU MAIN ITEM LINK -->
+          </li>
+          <!-- /MENU MAIN ITEM -->
+
+          <!-- MENU MAIN ITEM -->
+          <li class="menu-main-item">
+            <!-- MENU MAIN ITEM LINK -->
+            <a style="font-size:15px" class="menu-main-item-link" href="{% url 'django_registration_register' %}">Register</a>
+            <!-- /MENU MAIN ITEM LINK -->
+          </li>
+          <!-- /MENU MAIN ITEM -->
+        <!-- /MENU MAIN -->
+      </nav>
+      <!-- /NAVIGATION -->
+    {%endif%}
+  </header>
+  <!-- /HEADER -->
+  {% if user.is_authenticated %}
+  <!-- NAVIGATION-->
+  <nav id="navigation-widget-small" class="navigation-widget navigation-widget-desktop closed sidebar left delayed">
+    <!-- USER AVATAR -->
+    <a class="user-avatar small no-outline online" href="{% url 'profile' user.pk %}">
+      <!-- USER AVATAR CONTENT -->
+      <div style="position:relative; margin: 0 auto" class="user-avatar-content">
+        <!-- HEXAGON -->
+        <img src="{{user.profile.avatar.name|change_to_imagekit_url}}"
+          style="display:block;margin:auto;width: 40px; height: 40px;position:relative;object-fit:cover;border-radius:50%"></img>
+        <!-- /HEXAGON -->
+      </div>
+      <!-- /USER AVATAR CONTENT -->
+
+
+    </a>
+    <!-- /USER AVATAR -->
+
+    <!-- MENU -->
+    <ul class="menu small">
+      <!-- MENU ITEM -->
+      <li class="menu-item {%block active_small_nav_newsfeed%}{% endblock %}">
+        <!-- MENU ITEM LINK -->
+        <a class="menu-item-link text-tooltip-tfr" href="{% url 'homepage' %}" data-title="Newsfeed"
+          style="position: relative;">
+          <!-- MENU ITEM LINK ICON -->
+          <svg class="menu-item-link-icon icon-newsfeed">
+            <use xlink:href="#svg-newsfeed"></use>
+          </svg>
+          <!-- /MENU ITEM LINK ICON -->
+          <div class="xm-tooltip"
+            style="white-space: nowrap; position: absolute; z-index: 99999; right: -77px; top: 50%; margin-top: -12px; opacity: 0; visibility: hidden; transform: translate(10px, 0px); transition: all 0.3s ease-in-out 0s;">
+            <p class="xm-tooltip-text">Newsfeed</p>
+          </div>
+        </a>
+        <!-- /MENU ITEM LINK -->
+      </li>
+      <!-- /MENU ITEM -->
+
+
+      <!-- MENU ITEM -->
+      <li class="menu-item {%block active_small_nav_channel%}{% endblock %}">
+        <!-- MENU ITEM LINK -->
+        <a class="menu-item-link text-tooltip-tfr" href="{% url "channel-search" %}?q=" data-title="Channels" style="position: relative;">
+          <!-- MENU ITEM LINK ICON -->
+          <svg class="menu-item-link-icon icon-group">
+            <use xlink:href="#svg-group"></use>
+          </svg>
+          <!-- /MENU ITEM LINK ICON -->
+          <div class="xm-tooltip"
+            style="white-space: nowrap; position: absolute; z-index: 99999; right: -63px; top: 50%; margin-top: -12px; opacity: 0; visibility: hidden; transform: translate(10px, 0px); transition: all 0.3s ease-in-out 0s;">
+            <p class="xm-tooltip-text">Channels</p>
+          </div>
+        </a>
+        <!-- /MENU ITEM LINK -->
+      </li>
+      <!-- /MENU ITEM -->
+
+
+
+      <!-- MENU ITEM -->
+      <li class="menu-item">
+        <!-- MENU ITEM LINK -->
+        <a class="menu-item-link text-tooltip-tfr" href="#" data-title="Badges" style="position: relative;">
+          <!-- MENU ITEM LINK ICON -->
+          <svg class="menu-item-link-icon icon-badges">
+            <use xlink:href="#svg-badges"></use>
+          </svg>
+          <!-- /MENU ITEM LINK ICON -->
+          <div class="xm-tooltip"
+            style="white-space: nowrap; position: absolute; z-index: 99999; right: -65px; top: 50%; margin-top: -12px; opacity: 0; visibility: hidden; transform: translate(10px, 0px); transition: all 0.3s ease-in-out 0s;">
+            <p class="xm-tooltip-text">Badges</p>
+          </div>
+        </a>
+        <!-- /MENU ITEM LINK -->
+      </li>
+      <!-- /MENU ITEM -->
+
+     
+    </ul>
+    <!-- /MENU -->
+  </nav>
+  <!-- /NAVIGATION-->
+
+  <!-- NAVIGATION WIDGET -->
+  <nav id="navigation-widget" class="navigation-widget navigation-widget-desktop sidebar left hidden" data-simplebar>
+    <!-- NAVIGATION WIDGET COVER -->
+    <figure class="navigation-widget-cover liquid">
+      <img src="{{user.profile.cover.name|change_to_imagekit_url}}" alt="cover-01">
+    </figure>
+    <!-- /NAVIGATION WIDGET COVER -->
+
+    <!-- USER SHORT DESCRIPTION -->
+    <div class="user-short-description">
+      <!-- USER SHORT DESCRIPTION AVATAR -->
+      <a class="user-short-description-avatar user-avatar medium" href="{% url 'profile' user.pk %}">
+
+        <!-- USER AVATAR CONTENT -->
+        <div class="user-avatar-content">
+          <!-- HEXAGON -->
+          <img style="width:90px;height:90px;object-fit:cover;border-radius:50%" src="{{user.profile.avatar.name|change_to_imagekit_url}}"></img>
+          <!-- /HEXAGON -->
+        </div>
+        <!-- /USER AVATAR CONTENT -->
+
+
+        <!-- USER AVATAR BADGE -->
+        <div class="user-avatar-badge">
+          <!-- USER AVATAR BADGE BORDER -->
+          <div class="user-avatar-badge-border">
+            <!-- HEXAGON -->
+            <div class="hexagon-32-36"></div>
+            <!-- /HEXAGON -->
+          </div>
+          <!-- /USER AVATAR BADGE BORDER -->
+
+          <!-- USER AVATAR BADGE CONTENT -->
+          <div class="user-avatar-badge-content">
+            <!-- HEXAGON -->
+            <div class="hexagon-dark-26-28"></div>
+            <!-- /HEXAGON -->
+          </div>
+          <!-- /USER AVATAR BADGE CONTENT -->
+
+          <!-- USER AVATAR BADGE TEXT -->
+          <p class="user-avatar-badge-text">0</p>
+          <!-- /USER AVATAR BADGE TEXT -->
+        </div>
+        <!-- /USER AVATAR BADGE -->
+      </a>
+      <!-- /USER SHORT DESCRIPTION AVATAR -->
+
+      <!-- USER SHORT DESCRIPTION TITLE -->
+      <p class="user-short-description-title"><a href="{{user.profile.get_absolute_url}}">{{user.username}}</a></p>
+      <!-- /USER SHORT DESCRIPTION TITLE -->
+
+    </div>
+    <!-- /USER SHORT DESCRIPTION -->
+
+    <!-- BADGE LIST -->
+    <div class="badge-list small">
+      <!-- BADGE ITEM -->
+      <div class="badge-item">
+        <img src="{% static 'img/badge/gold-s.png' %}" alt="badge-gold-s">
+      </div>
+      <!-- /BADGE ITEM -->
+
+      <!-- BADGE ITEM -->
+      <div class="badge-item">
+        <img src="{% static 'img/badge/age-s.png' %}" alt="badge-age-s">
+      </div>
+      <!-- /BADGE ITEM -->
+
+      <!-- BADGE ITEM -->
+      <div class="badge-item">
+        <img src="{% static 'img/badge/caffeinated-s.png' %}" alt="badge-caffeinated-s">
+      </div>
+      <!-- /BADGE ITEM -->
+
+      <!-- BADGE ITEM -->
+      <div class="badge-item">
+        <img src="{% static 'img/badge/warrior-s.png' %}" alt="badge-warrior-s">
+      </div>
+      <!-- /BADGE ITEM -->
+
+      <!-- BADGE ITEM -->
+      <a class="badge-item" href="#">
+        <img src="{% static 'img/badge/blank-s.png' %}" alt="badge-blank-s">
+        <!-- BADGE ITEM TEXT -->
+        <p class="badge-item-text">+9</p>
+        <!-- /BADGE ITEM TEXT -->
+      </a>
+      <!-- /BADGE ITEM -->
+    </div>
+    <!-- /BADGE LIST -->
+
+    <!-- USER STATS -->
+    <div class="user-stats">
+      <!-- USER STAT -->
+      <div class="user-stat">
+        <!-- USER STAT TITLE -->
+        <p class="user-stat-title">{{user.post_set.count}}</p>
+        <!-- /USER STAT TITLE -->
+
+        <!-- USER STAT TEXT -->
+        <p class="user-stat-text">Posts</p>
+        <!-- /USER STAT TEXT -->
+      </div>
+      <!-- /USER STAT -->
+            <!-- USER STAT -->
+      <div class="user-stat">
+        <!-- USER STAT TITLE -->
+        <p class="user-stat-title">{{user.profile.total_point}}</p>
+        <!-- /USER STAT TITLE -->
+
+        <!-- USER STAT TEXT -->
+        <p class="user-stat-text">Points</p>
+        <!-- /USER STAT TEXT -->
+      </div>
+      <!-- /USER STAT -->
+    </div>
+    <!-- /USER STATS -->
+
+
+
+    <!-- MENU -->
+    <ul class="menu">
+      <!-- MENU ITEM -->
+      <li class="menu-item {%block active_nav_newsfeed %}{% endblock %}">
+        <!-- MENU ITEM LINK -->
+        <a class="menu-item-link" href="{% url 'homepage' %}">
+          <!-- MENU ITEM LINK ICON -->
+          <svg class="menu-item-link-icon icon-newsfeed">
+            <use xlink:href="#svg-newsfeed"></use>
+          </svg>
+          <!-- /MENU ITEM LINK ICON -->
+          Newsfeed
+        </a>
+        <!-- /MENU ITEM LINK -->
+      </li>
+      <!-- /MENU ITEM -->
+
+      <!-- MENU ITEM -->
+      <li class="menu-item {%block active_nav_channel %}{% endblock %}">
+        <!-- MENU ITEM LINK -->
+        <a class="menu-item-link" href="{% url 'channel-search' %}?q=">
+          <!-- MENU ITEM LINK ICON -->
+          <svg class="menu-item-link-icon icon-group">
+            <use xlink:href="#svg-group"></use>
+          </svg>
+          <!-- /MENU ITEM LINK ICON -->
+          Channels
+        </a>
+        <!-- /MENU ITEM LINK -->
+      </li>
+      <!-- /MENU ITEM -->
+
+      <!-- MENU ITEM -->
+      <li class="menu-item">
+        <!-- MENU ITEM LINK -->
+        <a class="menu-item-link" href="#">
+          <!-- MENU ITEM LINK ICON -->
+          <svg class="menu-item-link-icon icon-badges">
+            <use xlink:href="#svg-badges"></use>
+          </svg>
+          <!-- /MENU ITEM LINK ICON -->
+          Badges
+        </a>
+        <!-- /MENU ITEM LINK -->
+      </li>
+      <!-- /MENU ITEM -->
+
+
+    </ul>
+    <!-- /MENU -->
+  </nav>
+  <!-- /NAVIGATION WIDGET -->
+  <nav id="navigation-widget-mobile" class="navigation-widget navigation-widget-mobile sidebar left hidden"
+    data-simplebar="init" style="height: 977px;">
+    <div class="simplebar-wrapper" style="margin: 0px 0px -40px;">
+      <div class="simplebar-height-auto-observer-wrapper">
+        <div class="simplebar-height-auto-observer"></div>
+      </div>
+      <div class="simplebar-mask">
+        <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+          <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
+            <div class="simplebar-content" style="padding: 0px 0px 40px;">
+              <!-- NAVIGATION WIDGET CLOSE BUTTON -->
+              <div class="navigation-widget-close-button">
+                <!-- NAVIGATION WIDGET CLOSE BUTTON ICON -->
+                <svg class="navigation-widget-close-button-icon icon-back-arrow">
+                  <use xlink:href="#svg-back-arrow"></use>
+                </svg>
+                <!-- NAVIGATION WIDGET CLOSE BUTTON ICON -->
+              </div>
+              <!-- /NAVIGATION WIDGET CLOSE BUTTON -->
+
+              <!-- NAVIGATION WIDGET INFO WRAP -->
+              <div class="navigation-widget-info-wrap">
+                <!-- NAVIGATION WIDGET INFO -->
+                <div class="navigation-widget-info">
+                  <!-- USER AVATAR -->
+                  <a class="user-avatar small no-outline" href="{% url 'profile' user.pk %}">
+                    <!-- USER AVATAR CONTENT -->
+                    <div class="user-avatar-content">
+                      <!-- HEXAGON -->
+                      <img  src="{{user.profile.avatar.name|change_to_imagekit_url}}"
+                        style="border-radius:50%;width: 38px; height: 38px; position: relative;object-fit: cover"></img>
+                      <!-- /HEXAGON -->
+                    </div>
+                    <!-- /USER AVATAR CONTENT -->
+
+                  </a>
+                  <!-- /USER AVATAR -->
+
+                  <!-- NAVIGATION WIDGET INFO TITLE -->
+                  <p class="navigation-widget-info-title"><a href="{% url 'profile' pk=user.pk %}">{{user.username}}</a></p>
+                  <!-- /NAVIGATION WIDGET INFO TITLE -->
+
+                  <!-- NAVIGATION WIDGET INFO TEXT -->
+                  <p  class="navigation-widget-info-text">Points: {{request.user.profile.total_point}}</p>
+                  <!-- /NAVIGATION WIDGET INFO TEXT -->
+                </div>
+                <!-- /NAVIGATION WIDGET INFO -->
+
+                <!-- NAVIGATION WIDGET BUTTON -->
+                <a href="{% url 'logout' %}" style="color:white" class="navigation-widget-info-button button small secondary">Sign out</a>
+                <!-- /NAVIGATION WIDGET BUTTON -->
+              </div>
+              <!-- /NAVIGATION WIDGET INFO WRAP -->
+
+              <!-- NAVIGATION WIDGET SECTION TITLE -->
+              <p class="navigation-widget-section-title">Sections</p>
+              <!-- /NAVIGATION WIDGET SECTION TITLE -->
+
+              <!-- MENU -->
+              <ul class="menu">
+                <!-- MENU ITEM -->
+                <li class="menu-item {% block active_mobile_nav_newsfeed %}{% endblock %}">
+                  <!-- MENU ITEM LINK -->
+                  <a class="menu-item-link" href="{% url 'homepage' %}">
+                    <!-- MENU ITEM LINK ICON -->
+                    <svg class="menu-item-link-icon icon-newsfeed">
+                      <use xlink:href="#svg-newsfeed"></use>
+                    </svg>
+                    <!-- /MENU ITEM LINK ICON -->
+                    Newsfeed
+                  </a>
+                  <!-- /MENU ITEM LINK -->
+                </li>
+                <!-- /MENU ITEM -->
+
+
+                <!-- MENU ITEM -->
+                <li class="menu-item {% block active_mobile_nav_channels %}{% endblock %}">
+                  <!-- MENU ITEM LINK -->
+                  <a class="menu-item-link" href="{% url 'channel-search' %}?q=">
+                    <!-- MENU ITEM LINK ICON -->
+                    <svg class="menu-item-link-icon icon-group">
+                      <use xlink:href="#svg-group"></use>
+                    </svg>
+                    <!-- /MENU ITEM LINK ICON -->
+                    Channels
+                  </a>
+                  <!-- /MENU ITEM LINK -->
+                </li>
+                <!-- /MENU ITEM -->
+
+
+
+                <!-- MENU ITEM -->
+                <li class="menu-item">
+                  <!-- MENU ITEM LINK -->
+                  <a class="menu-item-link" href="#">
+                    <!-- MENU ITEM LINK ICON -->
+                    <svg class="menu-item-link-icon icon-badges">
+                      <use xlink:href="#svg-badges"></use>
+                    </svg>
+                    <!-- /MENU ITEM LINK ICON -->
+                    Badges
+                  </a>
+                  <!-- /MENU ITEM LINK -->
+                </li>
+                <!-- /MENU ITEM -->
+
+              </ul>
+              <!-- /MENU -->
+
+              <!-- NAVIGATION WIDGET SECTION TITLE -->
+              <p class="navigation-widget-section-title">My Profile</p>
+              <!-- /NAVIGATION WIDGET SECTION TITLE -->
+
+              <!-- NAVIGATION WIDGET SECTION LINK -->
+              <a class="navigation-widget-section-link" href="{%url 'account-info' %}">Personal information</a>
+              <!-- /NAVIGATION WIDGET SECTION LINK -->
+              <!-- NAVIGATION WIDGET SECTION LINK -->
+              <a class="navigation-widget-section-link" href="{% url 'notification' %}">Notifications</a>
+              <!-- /NAVIGATION WIDGET SECTION LINK -->
+
+
+
+              <!-- NAVIGATION WIDGET SECTION TITLE -->
+              <p class="navigation-widget-section-title">Account</p>
+              <!-- /NAVIGATION WIDGET SECTION TITLE -->
+
+              <!-- NAVIGATION WIDGET SECTION LINK -->
+              <a class="navigation-widget-section-link" href="{% url 'password_change' %}">Change password</a>
+              <!-- /NAVIGATION WIDGET SECTION LINK -->
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="simplebar-placeholder" style="width: auto; height: 1976px;"></div>
+    </div>
+    <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;">
+      <div class="simplebar-scrollbar" style="width: 0px; transform: translate3d(0px, 0px, 0px); display: none;"></div>
+    </div>
+    <div class="simplebar-track simplebar-vertical" style="visibility: visible;">
+      <div class="simplebar-scrollbar" style="height: 483px; transform: translate3d(0px, 0px, 0px); display: block;">
+      </div>
+    </div>
+  </nav>
+  {%endif%}
+  {%if user.is_authenticated%}
+  <!-- FLOATY BAR -->
+  <aside class="floaty-bar">
+    <!-- BAR ACTIONS -->
+    <div class="bar-actions">
+      <!-- PROGRESS STAT -->
+      <div class="progress-stat">
+        <!-- BAR PROGRESS WRAP -->
+        <div class="bar-progress-wrap">
+          <!-- BAR PROGRESS INFO -->
+          <p class="bar-progress-info">Next: <span class="bar-progress-text"></span></p>
+          <!-- /BAR PROGRESS INFO -->
+        </div>
+        <!-- /BAR PROGRESS WRAP -->
+
+        <!-- PROGRESS STAT BAR -->
+        <div id="logged-user-level-cp" class="progress-stat-bar"></div>
+        <!-- /PROGRESS STAT BAR -->
+      </div>
+      <!-- /PROGRESS STAT -->
+    </div>
+    <!-- /BAR ACTIONS -->
+
+    <!-- BAR ACTIONS -->
+    <div class="bar-actions">
+      <!-- ACTION LIST -->
+      <div class="action-list dark">
+        <!-- ACTION LIST ITEM -->
+        <a class="action-list-item" href="{% url 'homepage' %}">
+          <!-- ICON TIMELINE -->
+          <!-- ICON NEWSFEED -->
+          <svg class="action-list-item-icon icon-newsfeed">
+            <use xlink:href="#svg-newsfeed"></use>
+          </svg>
+          <!-- /ICON NEWSFEED -->
+        </a>
+        <!-- /ACTION LIST ITEM -->
+        <!-- ACTION LIST ITEM -->
+        <a class="action-list-item" href="{% url 'channel-search' %}?q=">
+          <!-- ICON GROUP -->
+          <svg class="action-list-item-icon icon-group">
+            <use xlink:href="#svg-group"></use>
+          </svg>
+          <!-- /ICON GROUP -->
+        </a>
+        <!-- /ACTION LIST ITEM -->
+        <!-- ACTION LIST ITEM -->
+        <div data-next-url="{% url 'notification' %}" id="mobile-notification-icon" class="action-list-item {% if number_of_unread_notification %} unread {%endif%}" href="{% url 'notification' %}">
+          {%csrf_token%}
+          <!-- ACTION LIST ITEM ICON -->
+          <svg class="action-list-item-icon icon-notification">
+            <use xlink:href="#svg-notification"></use>
+          </svg>
+          <!-- /ACTION LIST ITEM ICON -->
+        </div>
+        <!-- /ACTION LIST ITEM -->
+      </div>
+      <!-- /ACTION LIST -->
+
+      <!-- ACTION ITEM WRAP -->
+      <a class="action-item-wrap" href="{% url 'account-info' %}">
+        <!-- ACTION ITEM -->
+        <div class="action-item dark">
+          <!-- ACTION ITEM ICON -->
+          <svg class="action-item-icon icon-settings">
+            <use xlink:href="#svg-settings"></use>
+          </svg>
+          <!-- /ACTION ITEM ICON -->
+        </div>
+        <!-- /ACTION ITEM -->
+      </a>
+      <!-- /ACTION ITEM WRAP -->
+    </div>
+    <!-- /BAR ACTIONS -->
+  </aside>
+  <!-- /FLOATY BAR -->
+  {%endif%}
+  <!-- CONTENT -->
+  {% block content %}{% endblock %}
+  <!-- /CONTENT -->
+  <!-- app -->
+  {%block styles %}
+  {% endblock %}
+
+
+  <script src="{% static 'js/search.js' %}"></script>
+  <script src="{% static 'js/utils/app.js' %}"></script>
+  <!-- page loader -->
+  <script src="{% static 'js/utils/page-loader.js' %}"></script>
+  <!-- simplebar -->
+  <script src="{% static 'js/vendor/simplebar.min.js' %}"></script>
+  <!-- liquidify -->
+  <script src="{% static 'js/utils/liquidify.js' %}"></script>
+  <!-- XM_Plugins -->
+  <script src="{% static 'js/vendor/xm_plugins.min.js' %}"></script>
+  <!-- tiny-slider -->
+  <script src="{% static 'js/vendor/tiny-slider.min.js' %}"></script>
+  <!-- chartJS -->
+  <script src="{% static 'js/vendor/Chart.bundle.min.js' %}"></script>
+  <!-- global.hexagons -->
+  <script src="{% static 'js/global/global.hexagons.js' %}"></script>
+  <!-- global.tooltips -->
+  <script src="{% static 'js/global/global.tooltips.js' %}"></script>
+  <!-- global.popups -->
+  <script src="{% static 'js/global/global.popups.js' %}"></script>
+  <!-- global.charts -->
+  <script src="{% static 'js/global/global.charts.js' %}"></script>
+  <!-- header -->
+  <script src="{% static 'js/header/header.js' %}"></script>
+  <!-- sidebar -->
+  <script src="{% static 'js/sidebar/sidebar.js' %}"></script>
+  <!-- content -->
+  <script src="{% static 'js/content/content.js' %}"></script>
+  <!-- form.utils -->
+  <script src="{% static 'js/form/form.utils.js' %}"></script>
+  <!-- SVG icons -->
+  <script src="{% static 'js/utils/svg-loader.js' %}"></script>
+
+  {%if user.is_authenticated%}
+  <script type="text/javascript" src="{% static 'js/notifications.js' %}"></script>
+  {%endif%}
+  {%block scripts%}
+  {%endblock%}
+</body>
+
+</html>

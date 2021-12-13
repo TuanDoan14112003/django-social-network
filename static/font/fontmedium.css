@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'SVN-RajdhaniMedium';
+  src: url('SVN-RajdhaniMedium.eot');
+  src: url('SVN-RajdhaniMedium.eot?#iefix') format('embedded-opentype'),
+       url('SVN-RajdhaniMedium.svg#SVN-RajdhaniMedium') format('svg'),
+       url('SVN-RajdhaniMedium.ttf') format('truetype'),
+       url('SVN-RajdhaniMedium.woff') format('woff'),
+       url('SVN-RajdhaniMedium.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+

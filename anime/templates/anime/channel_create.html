@@ -1,0 +1,153 @@
+{%extends 'anime/base.html'%}
+{%load static%}
+{%block content%}
+
+<!-- CONTENT GRID -->
+<div class="content-grid" style="transform: translate(0px, 0px); transition: transform 0.4s ease-in-out 0s;">
+  <!-- SECTION BANNER -->
+  <div class="section-banner">
+    <!-- SECTION BANNER ICON -->
+    <img style="border-radius:12px" class="section-banner-icon" src="{% static 'img/banner/groups-icon.png' %}" alt="newsfeed-icon">
+    <!-- /SECTION BANNER ICON -->
+
+    <!-- SECTION BANNER TITLE -->
+    <p class="section-banner-title">Create channel </p>
+    <!-- /SECTION BANNER TITLE -->
+
+    <!-- SECTION BANNER TEXT -->
+    <p class="section-banner-text">Create your own community!</p>
+    <!-- /SECTION BANNER TEXT -->
+  </div>
+  <!-- /SECTION BANNER -->
+
+  <!-- GRID -->
+  <div class="grid grid-3-6-3 mobile-prefer-content">
+    <!-- GRID COLUMN -->
+    <div class="grid-column">
+
+      <!-- WIDGET BOX -->
+      <div style="padding:0" class="widget-box">
+      <img style="border-radius:12px;max-width:100%;height:700px;object-fit:cover" src="{% static 'img/banner2.webp' %}">
+      </img>
+      </div>
+      <!-- /WIDGET BOX -->
+    </div>
+    <!-- /GRID COLUMN -->
+    <!-- GRID COLUMN -->
+    <div class="grid-column">
+      {% if user.is_authenticated %}
+      <!-- QUICK POST -->
+      <div class="quick-post">
+        <!-- QUICK POST HEADER -->
+        <div class="quick-post-header">
+          <!-- OPTION ITEMS -->
+          <div class="option-items">
+            <!-- OPTION ITEM -->
+            <div class="option-item active">
+              <!-- OPTION ITEM ICON -->
+              <svg class="option-item-icon icon-status">
+                <use xlink:href="#svg-status"></use>
+              </svg>
+              <!-- /OPTION ITEM ICON -->
+
+              <!-- OPTION ITEM TITLE -->
+              <p class="option-item-title">Create a channel</p>
+              <!-- /OPTION ITEM TITLE -->
+            </div>
+            <!-- /OPTION ITEM -->
+          </div>
+          <!-- /OPTION ITEMS -->
+        </div>
+        <!-- /QUICK POST HEADER -->
+
+        <!-- QUICK POST BODY -->
+        <div class="quick-post-body">
+          <!-- FORM -->
+          {%for error in form.non_field_errors %}
+          <div style="color:red">{{error}}</div>
+          {%endfor%}
+
+
+          <form id="create-channel-form" method="post" class="form">
+            {% csrf_token %}
+            <!-- FORM ROW -->
+            <div class="form-row">
+              <!-- FORM ITEM -->
+              <div class="form-item">
+                <!-- FORM TEXTAREA -->
+                <div class="form-textarea">
+                  <input required placeholder="Tên channel" type="text" name="name" maxlength="100" 
+                    id="id_name">
+                    {% if form.name.errors %}
+                      {%for error in form.name.errors %}
+                      <ul class="errorlist">{{error}}</ul>
+                      {%endfor%}
+                    {% endif %}
+                  <textarea required cols="40" rows="10" id="id_description" name="description"
+                    placeholder="Giới thiệu"></textarea>
+                    {% if form.description.errors %}
+                      {%for error in form.description.errors %}
+                      <ul class="errorlist">{{error}}</ul>
+                      {%endfor%}
+                    {% endif %}
+                  <!-- FORM TEXTAREA LIMIT TEXT -->
+                  <!-- /FORM TEXTAREA LIMIT TEXT -->
+                </div>
+                <!-- /FORM TEXTAREA -->
+              </div>
+              <!-- /FORM ITEM -->
+            </div>
+            <!-- /FORM ROW -->
+          </form>
+          <!-- /FORM -->
+        </div>
+        <!-- /QUICK POST BODY -->
+
+        <!-- QUICK POST FOOTER -->
+        <div class="quick-post-footer">
+          <!-- QUICK POST FOOTER ACTIONS -->
+          <div class="quick-post-footer-actions">
+
+          </div>
+          <!-- /QUICK POST FOOTER ACTIONS -->
+
+          <!-- QUICK POST FOOTER ACTIONS -->
+          <div class="quick-post-footer-actions">
+            <!-- BUTTON -->
+            <input form="create-channel-form" type="submit" value="Create" class="button small secondary"
+              maxlength="50"
+              form="post-submit-form">
+            <!-- /BUTTON -->
+          </div>
+          <!-- /QUICK POST FOOTER ACTIONS -->
+        </div>
+        <!-- /QUICK POST FOOTER -->
+      </div>
+      <!-- /QUICK POST -->
+      {% endif %}
+
+    </div>
+    <!-- /GRID COLUMN -->
+
+    <!-- GRID COLUMN -->
+    <div class="grid-column">
+
+
+
+      <!-- WIDGET BOX -->
+      <div style="padding:0" class="widget-box">
+      <img style="border-radius:12px;max-width:100%;height:700px;object-fit:cover" src="{% static 'img/banner1.webp' %}">
+      </img>
+      </div>
+      <!-- /WIDGET BOX -->
+
+
+    </div>
+    <!-- /GRID COLUMN -->
+
+
+  </div>
+  <!-- /GRID -->
+</div>
+<!-- /CONTENT GRID -->
+{%endblock%}

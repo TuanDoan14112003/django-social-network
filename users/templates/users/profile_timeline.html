@@ -1,0 +1,677 @@
+{%extends 'anime/base.html'%}
+{%load humanize%}
+{%load static%}
+{% load imagekit_url %}
+{% block content %}
+<!-- CONTENT GRID -->
+<div class="content-grid">
+  <!-- PROFILE HEADER -->
+  <div class="profile-header">
+    <!-- PROFILE HEADER COVER -->
+    <figure class="profile-header-cover liquid">
+      <img src="{{object.profile.cover.name|change_to_imagekit_url}}" alt="cover-01">
+    </figure>
+    <!-- /PROFILE HEADER COVER -->
+
+    <!-- PROFILE HEADER INFO -->
+    <div class="profile-header-info">
+      <!-- USER SHORT DESCRIPTION -->
+      <div class="user-short-description big">
+        <!-- USER SHORT DESCRIPTION AVATAR -->
+        <a class="user-short-description-avatar user-avatar big" target="_blank" href="{{object.profile.avatar.name|change_to_imagekit_url}}">
+
+          <!-- USER AVATAR CONTENT -->
+          <div class="user-avatar-content">
+            <!-- HEXAGON -->
+            <img style="margin-top:20px;width:110px; height:110px;object-fit:cover;border-radius:50%" src="{{object.profile.avatar.name|change_to_imagekit_url}}"></img>
+            <!-- /HEXAGON -->
+          </div>
+          <!-- /USER AVATAR CONTENT -->
+
+        </a>
+        <!-- /USER SHORT DESCRIPTION AVATAR -->
+
+        <!-- USER SHORT DESCRIPTION AVATAR -->
+        <a class="user-short-description-avatar user-short-description-avatar-mobile user-avatar medium"
+          href="#">
+
+          <!-- USER AVATAR CONTENT -->
+          <div class="user-avatar-content">
+            <!-- HEXAGON -->
+            <img style="object-fit:cover;width:90px;height:90px;border-radius:50%" src="{{object.profile.avatar.name|change_to_imagekit_url}}"></img>
+            <!-- /HEXAGON -->
+          </div>
+          <!-- /USER AVATAR CONTENT -->
+        </a>
+        <!-- /USER SHORT DESCRIPTION AVATAR -->
+
+        <!-- USER SHORT DESCRIPTION TITLE -->
+        <p class="user-short-description-title"><a href="#">{{object.username}}</a></p>
+        <!-- /USER SHORT DESCRIPTION TITLE -->
+
+      </div>
+      <!-- /USER SHORT DESCRIPTION -->
+
+      <!-- PROFILE HEADER SOCIAL LINKS WRAP -->
+      <div class="profile-header-social-links-wrap">
+        <!-- PROFILE HEADER SOCIAL LINKS -->
+        <div id="profile-header-social-links-slider" class="profile-header-social-links">
+          <div class="profile-header-social-link">
+            <!-- SOCIAL LINK -->
+            <a class="social-link facebook" href="#">
+              <!-- ICON FACEBOOK -->
+              <svg class="icon-facebook">
+                <use xlink:href="#svg-facebook"></use>
+              </svg>
+              <!-- /ICON FACEBOOK -->
+            </a>
+            <!-- /SOCIAL LINK -->
+          </div>
+
+          <div class="profile-header-social-link">
+            <!-- SOCIAL LINK -->
+            <a class="social-link twitter" href="#">
+              <!-- ICON TWITTER -->
+              <svg class="icon-twitter">
+                <use xlink:href="#svg-twitter"></use>
+              </svg>
+              <!-- /ICON TWITTER -->
+            </a>
+            <!-- /SOCIAL LINK -->
+          </div>
+
+          <div class="profile-header-social-link">
+            <!-- SOCIAL LINK -->
+            <a class="social-link instagram" href="#">
+              <!-- ICON INSTAGRAM -->
+              <svg class="icon-instagram">
+                <use xlink:href="#svg-instagram"></use>
+              </svg>
+              <!-- /ICON INSTAGRAM -->
+            </a>
+            <!-- /SOCIAL LINK -->
+          </div>
+
+          <div class="profile-header-social-link">
+            <!-- SOCIAL LINK -->
+            <a class="social-link twitch" href="#">
+              <!-- ICON TWITCH -->
+              <svg class="icon-twitch">
+                <use xlink:href="#svg-twitch"></use>
+              </svg>
+              <!-- /ICON TWITCH -->
+            </a>
+            <!-- /SOCIAL LINK -->
+          </div>
+
+          <div class="profile-header-social-link">
+            <!-- SOCIAL LINK -->
+            <a class="social-link youtube" href="#">
+              <!-- ICON YOUTUBE -->
+              <svg class="icon-youtube">
+                <use xlink:href="#svg-youtube"></use>
+              </svg>
+              <!-- /ICON YOUTUBE -->
+            </a>
+            <!-- /SOCIAL LINK -->
+          </div>
+
+          <div class="profile-header-social-link">
+            <!-- SOCIAL LINK -->
+            <a class="social-link patreon" href="#">
+              <!-- ICON PATREON -->
+              <svg class="icon-patreon">
+                <use xlink:href="#svg-patreon"></use>
+              </svg>
+              <!-- /ICON PATREON -->
+            </a>
+            <!-- /SOCIAL LINK -->
+          </div>
+
+          <div class="profile-header-social-link">
+            <!-- SOCIAL LINK -->
+            <a class="social-link discord" href="#">
+              <!-- ICON DISCORD -->
+              <svg class="icon-discord">
+                <use xlink:href="#svg-discord"></use>
+              </svg>
+              <!-- /ICON DISCORD -->
+            </a>
+            <!-- /SOCIAL LINK -->
+          </div>
+        </div>
+        <!-- /PROFILE HEADER SOCIAL LINKS -->
+
+        <!-- SLIDER CONTROLS -->
+        <div id="profile-header-social-links-slider-controls" class="slider-controls">
+          <!-- SLIDER CONTROL -->
+          <div class="slider-control left">
+            <!-- SLIDER CONTROL ICON -->
+            <svg class="slider-control-icon icon-small-arrow">
+              <use xlink:href="#svg-small-arrow"></use>
+            </svg>
+            <!-- /SLIDER CONTROL ICON -->
+          </div>
+          <!-- /SLIDER CONTROL -->
+
+          <!-- SLIDER CONTROL -->
+          <div class="slider-control right">
+            <!-- SLIDER CONTROL ICON -->
+            <svg class="slider-control-icon icon-small-arrow">
+              <use xlink:href="#svg-small-arrow"></use>
+            </svg>
+            <!-- /SLIDER CONTROL ICON -->
+          </div>
+          <!-- /SLIDER CONTROL -->
+        </div>
+        <!-- /SLIDER CONTROLS -->
+      </div>
+      <!-- /PROFILE HEADER SOCIAL LINKS WRAP -->
+
+      <!-- USER STATS -->
+      <div class="user-stats">
+        <!-- USER STAT -->
+        <div class="user-stat big">
+          <!-- USER STAT TITLE -->
+          <p class="user-stat-title">{{object.post_set.count}}</p>
+          <!-- /USER STAT TITLE -->
+
+          <!-- USER STAT TEXT -->
+          <p class="user-stat-text">Post</p>
+          <!-- /USER STAT TEXT -->
+        </div>
+        <!-- /USER STAT -->
+        <!-- USER STAT -->
+        <div class="user-stat big">
+          <!-- USER STAT TITLE -->
+          <p class="user-stat-title">0</p>
+          <!-- /USER STAT TITLE -->
+
+          <!-- USER STAT TEXT -->
+          <p class="user-stat-text">Friends</p>
+          <!-- /USER STAT TEXT -->
+        </div>
+        <!-- /USER STAT -->
+                <!-- USER STAT -->
+        <div class="user-stat big">
+          <!-- USER STAT TITLE -->
+          <p class="user-stat-title">{{object.profile.total_point}}</p>
+          <!-- /USER STAT TITLE -->
+
+          <!-- USER STAT TEXT -->
+          <p class="user-stat-text">Points</p>
+          <!-- /USER STAT TEXT -->
+        </div>
+        <!-- /USER STAT -->
+      </div>
+      <!-- /USER STATS -->
+
+      <!-- PROFILE HEADER INFO ACTIONS -->
+      <div class="profile-header-info-actions">
+        <!-- PROFILE HEADER INFO ACTION -->
+        <p class="profile-header-info-action button secondary"><span class="hide-text-mobile">Comming</span> soon</p>
+        <!-- /PROFILE HEADER INFO ACTION -->
+
+        <!-- PROFILE HEADER INFO ACTION -->
+        <p class="profile-header-info-action button primary"><span class="hide-text-mobile">Comming</span> soon</p>
+        <!-- /PROFILE HEADER INFO ACTION -->
+      </div>
+      <!-- /PROFILE HEADER INFO ACTIONS -->
+    </div>
+    <!-- /PROFILE HEADER INFO -->
+  </div>
+  <!-- /PROFILE HEADER -->
+
+  <!-- SECTION NAVIGATION -->
+  <nav class="section-navigation">
+    <!-- SECTION MENU -->
+    <div id="section-navigation-slider" class="section-menu">
+      <!-- SECTION MENU ITEM -->
+      <a class="section-menu-item active" href="#">
+        <!-- SECTION MENU ITEM ICON -->
+        <svg class="section-menu-item-icon icon-profile">
+          <use xlink:href="#svg-profile"></use>
+        </svg>
+        <!-- /SECTION MENU ITEM ICON -->
+
+        <!-- SECTION MENU ITEM TEXT -->
+        <p class="section-menu-item-text">About</p>
+        <!-- /SECTION MENU ITEM TEXT -->
+      </a>
+      <!-- /SECTION MENU ITEM -->
+
+      <!-- SECTION MENU ITEM -->
+      <a class="section-menu-item" href="#">
+        <!-- SECTION MENU ITEM ICON -->
+        <svg class="section-menu-item-icon icon-timeline">
+          <use xlink:href="#svg-timeline"></use>
+        </svg>
+        <!-- /SECTION MENU ITEM ICON -->
+
+        <!-- SECTION MENU ITEM TEXT -->
+        <p class="section-menu-item-text">Timeline</p>
+        <!-- /SECTION MENU ITEM TEXT -->
+      </a>
+      <!-- /SECTION MENU ITEM -->
+
+      <!-- SECTION MENU ITEM -->
+      <a class="section-menu-item" href="#">
+        <!-- SECTION MENU ITEM ICON -->
+        <svg class="section-menu-item-icon icon-friend">
+          <use xlink:href="#svg-friend"></use>
+        </svg>
+        <!-- /SECTION MENU ITEM ICON -->
+
+        <!-- SECTION MENU ITEM TEXT -->
+        <p class="section-menu-item-text">Friends</p>
+        <!-- /SECTION MENU ITEM TEXT -->
+      </a>
+      <!-- /SECTION MENU ITEM -->
+
+      <!-- SECTION MENU ITEM -->
+      <a class="section-menu-item" href="#">
+        <!-- SECTION MENU ITEM ICON -->
+        <svg class="section-menu-item-icon icon-group">
+          <use xlink:href="#svg-group"></use>
+        </svg>
+        <!-- /SECTION MENU ITEM ICON -->
+
+        <!-- SECTION MENU ITEM TEXT -->
+        <p class="section-menu-item-text">Groups</p>
+        <!-- /SECTION MENU ITEM TEXT -->
+      </a>
+      <!-- /SECTION MENU ITEM -->
+
+      <!-- SECTION MENU ITEM -->
+      <a class="section-menu-item" href="#">
+        <!-- SECTION MENU ITEM ICON -->
+        <svg class="section-menu-item-icon icon-photos">
+          <use xlink:href="#svg-photos"></use>
+        </svg>
+        <!-- /SECTION MENU ITEM ICON -->
+
+        <!-- SECTION MENU ITEM TEXT -->
+        <p class="section-menu-item-text">Photos</p>
+        <!-- /SECTION MENU ITEM TEXT -->
+      </a>
+      <!-- /SECTION MENU ITEM -->
+
+      <!-- SECTION MENU ITEM -->
+      <a class="section-menu-item" href="#">
+        <!-- SECTION MENU ITEM ICON -->
+        <svg class="section-menu-item-icon icon-videos">
+          <use xlink:href="#svg-videos"></use>
+        </svg>
+        <!-- /SECTION MENU ITEM ICON -->
+
+        <!-- SECTION MENU ITEM TEXT -->
+        <p class="section-menu-item-text">Videos</p>
+        <!-- /SECTION MENU ITEM TEXT -->
+      </a>
+      <!-- /SECTION MENU ITEM -->
+
+      <!-- SECTION MENU ITEM -->
+      <a class="section-menu-item" href="#">
+        <!-- SECTION MENU ITEM ICON -->
+        <svg class="section-menu-item-icon icon-badges">
+          <use xlink:href="#svg-badges"></use>
+        </svg>
+        <!-- /SECTION MENU ITEM ICON -->
+
+        <!-- SECTION MENU ITEM TEXT -->
+        <p class="section-menu-item-text">Badges</p>
+        <!-- /SECTION MENU ITEM TEXT -->
+      </a>
+      <!-- /SECTION MENU ITEM -->
+
+      <!-- SECTION MENU ITEM -->
+      <a class="section-menu-item" href="#">
+        <!-- SECTION MENU ITEM ICON -->
+        <svg class="section-menu-item-icon icon-streams">
+          <use xlink:href="#svg-streams"></use>
+        </svg>
+        <!-- /SECTION MENU ITEM ICON -->
+
+        <!-- SECTION MENU ITEM TEXT -->
+        <p class="section-menu-item-text">Streams</p>
+        <!-- /SECTION MENU ITEM TEXT -->
+      </a>
+      <!-- /SECTION MENU ITEM -->
+
+      <!-- SECTION MENU ITEM -->
+      <a class="section-menu-item" href="#">
+        <!-- SECTION MENU ITEM ICON -->
+        <svg class="section-menu-item-icon icon-blog-posts">
+          <use xlink:href="#svg-blog-posts"></use>
+        </svg>
+        <!-- /SECTION MENU ITEM ICON -->
+
+        <!-- SECTION MENU ITEM TEXT -->
+        <p class="section-menu-item-text">Blog</p>
+        <!-- /SECTION MENU ITEM TEXT -->
+      </a>
+      <!-- /SECTION MENU ITEM -->
+
+      <!-- SECTION MENU ITEM -->
+      <a class="section-menu-item" href="#">
+        <!-- SECTION MENU ITEM ICON -->
+        <svg class="section-menu-item-icon icon-forum">
+          <use xlink:href="#svg-forum"></use>
+        </svg>
+        <!-- /SECTION MENU ITEM ICON -->
+
+        <!-- SECTION MENU ITEM TEXT -->
+        <p class="section-menu-item-text">Forum</p>
+        <!-- /SECTION MENU ITEM TEXT -->
+      </a>
+      <!-- /SECTION MENU ITEM -->
+
+      <!-- SECTION MENU ITEM -->
+      <a class="section-menu-item" href="#">
+        <!-- SECTION MENU ITEM ICON -->
+        <svg class="section-menu-item-icon icon-store">
+          <use xlink:href="#svg-store"></use>
+        </svg>
+        <!-- /SECTION MENU ITEM ICON -->
+
+        <!-- SECTION MENU ITEM TEXT -->
+        <p class="section-menu-item-text">Store</p>
+        <!-- /SECTION MENU ITEM TEXT -->
+      </a>
+      <!-- /SECTION MENU ITEM -->
+    </div>
+    <!-- /SECTION MENU -->
+
+    <!-- SLIDER CONTROLS -->
+    <div id="section-navigation-slider-controls" class="slider-controls">
+      <!-- SLIDER CONTROL -->
+      <div class="slider-control left">
+        <!-- SLIDER CONTROL ICON -->
+        <svg class="slider-control-icon icon-small-arrow">
+          <use xlink:href="#svg-small-arrow"></use>
+        </svg>
+        <!-- /SLIDER CONTROL ICON -->
+      </div>
+      <!-- /SLIDER CONTROL -->
+
+      <!-- SLIDER CONTROL -->
+      <div class="slider-control right">
+        <!-- SLIDER CONTROL ICON -->
+        <svg class="slider-control-icon icon-small-arrow">
+          <use xlink:href="#svg-small-arrow"></use>
+        </svg>
+        <!-- /SLIDER CONTROL ICON -->
+      </div>
+      <!-- /SLIDER CONTROL -->
+    </div>
+    <!-- /SLIDER CONTROLS -->
+  </nav>
+  <!-- /SECTION NAVIGATION -->
+
+  <!-- GRID -->
+  <div class="grid grid-3-6-3">
+    <!-- GRID COLUMN -->
+    <div class="grid-column">
+      <!-- WIDGET BOX -->
+      <div class="widget-box">
+        <!-- WIDGET BOX TITLE -->
+        <p class="widget-box-title">Description</p>
+        <!-- /WIDGET BOX TITLE -->
+
+        <!-- WIDGET BOX CONTENT -->
+        <div class="widget-box-content">
+          <!-- PARAGRAPH -->
+          <p class="paragraph">{{object.profile.description}}</p>
+          <!-- /PARAGRAPH -->
+
+          <!-- INFORMATION LINE LIST -->
+          <div class="information-line-list">
+            <!-- INFORMATION LINE -->
+            <div class="information-line">
+              <!-- INFORMATION LINE TITLE -->
+              <p class="information-line-title">Join</p>
+              <!-- /INFORMATION LINE TITLE -->
+
+              <!-- INFORMATION LINE TEXT -->
+              <p class="information-line-text">{{object.date_joined|naturalday}}</p>
+              <!-- /INFORMATION LINE TEXT -->
+            </div>
+            <!-- /INFORMATION LINE -->
+          </div>
+          <!-- /INFORMATION LINE LIST -->
+        </div>
+        <!-- /WIDGET BOX CONTENT -->
+      </div>
+      <!-- /WIDGET BOX -->
+
+    </div>
+    <!-- /GRID COLUMN -->
+
+    <!-- GRID COLUMN -->
+    <div class="grid-column">
+      <!-- SIMPLE TAB ITEMS -->
+      <div class="simple-tab-items">
+        <!-- FORM -->
+        <form class="form">
+          <!-- FORM SELECT -->
+          <div class="form-select">
+            <select id="newsfeed-filter-category" name="newsfeed_filter_category">
+              <option value="0">All Updates</option>
+            </select>
+            <!-- FORM SELECT ICON -->
+            <svg class="form-select-icon icon-small-arrow">
+              <use xlink:href="#svg-small-arrow"></use>
+            </svg>
+            <!-- /FORM SELECT ICON -->
+          </div>
+          <!-- /FORM SELECT -->
+        </form>
+        <!-- /FORM -->
+
+        <!-- SIMPLE TAB ITEM -->
+        <p class="simple-tab-item active">Hot Posts</p>
+        <!-- /SIMPLE TAB ITEM -->
+
+      </div>
+      <!-- /SIMPLE TAB ITEMS -->
+      <div class="infinite-container posts-container">
+      {% for item in posts %}
+      <!-- widget box -->
+      <div style="margin:20px 0px 20px 0px" class="infinite-item widget-box no-padding">
+        {%ifequal item.0.author user%}
+        <!-- WIDGET BOX SETTINGS -->
+        <div class="widget-box-settings">
+          <!-- POST SETTINGS WRAP -->
+          <div class="post-settings-wrap" style="position: relative;">
+            <!-- POST SETTINGS -->
+            <div class="post-settings widget-box-post-settings-dropdown-trigger">
+              <!-- POST SETTINGS ICON -->
+              <svg class="post-settings-icon icon-more-dots">
+                <use xlink:href="#svg-more-dots"></use>
+              </svg>
+              <!-- /POST SETTINGS ICON -->
+            </div>
+            <!-- /POST SETTINGS -->
+
+            <!-- SIMPLE DROPDOWN -->
+            <div class="simple-dropdown widget-box-post-settings-dropdown"
+              style="position: absolute; z-index: 9999; top: 30px; right: 9px; opacity: 0; visibility: hidden; transform: translate(0px, -20px); transition: transform 0.3s ease-in-out 0s, opacity 0.3s ease-in-out 0s, visibility 0.3s ease-in-out 0s;">
+              <!-- SIMPLE DROPDOWN LINK -->
+              <a style="color:white" href="{% url 'post-update' item.0.channel.slug item.0.pk %}" class="simple-dropdown-link">Edit</a>
+              <!-- /SIMPLE DROPDOWN LINK -->
+              <form method="POST" action="{% url 'post-delete' slug=item.0.channel.slug pk=item.0.pk %}">
+                <!-- SIMPLE DROPDOWN LINK -->
+                {%csrf_token %}
+                <input type="submit" style="color:#ff4d4d;background-color: Transparent;"class="simple-dropdown-link" value="Delete" />
+                <!-- /SIMPLE DROPDOWN LINK -->
+              </form>
+            </div>
+            <!-- /SIMPLE DROPDOWN -->
+          </div>
+          <!-- /POST SETTINGS WRAP -->
+        </div>
+        <!-- /WIDGET BOX SETTINGS -->
+        {%endifequal%}
+        <!-- WIDGET BOX STATUS -->
+        <div class="widget-box-status">
+          <!-- WIDGET BOX STATUS CONTENT -->
+          <div class="widget-box-status-content">
+              <!-- USER STATUS -->
+              <div class="user-status">
+                <!-- USER STATUS AVATAR -->
+                <a class="user-status-avatar" href="profile-timeline.html">
+                  <!-- USER AVATAR -->
+                  <div class="user-avatar small no-outline">
+                    <!-- USER AVATAR CONTENT -->
+                    <div class="user-avatar-content">
+                      <!-- HEXAGON -->
+                      <img style="border-radius:50%;width:40px;height:40px" src="{{item.0.author.profile.avatar.name|change_to_imagekit_url}}"></img>
+                      <!-- /HEXAGON -->
+                    </div>
+                    <!-- /USER AVATAR CONTENT -->
+
+                  </div>
+                  <!-- /USER AVATAR -->
+                </a>
+                <!-- /USER STATUS AVATAR -->
+
+                <!-- USER STATUS TITLE -->
+                <p style="margin-top:5px" class="user-status-title medium"><a class="bold"
+                    href="{{item.0.author.profile.get_absolute_url}}">{{item.0.author.username}}</a> from channel<a class="bold"
+                    href="{{item.0.channel.get_absolute_url}}"> {{item.0.channel.name}}</a></p>
+                <!-- /USER STATUS TITLE -->
+
+                <!-- USER STATUS TEXT -->
+                <p class="user-status-text small">{{item.0.timestamped|naturaltime}}</p>
+                <!-- /USER STATUS TEXT -->
+              </div>
+              <!-- /USER STATUS -->
+
+            <!-- WIDGET BOX STATUS TEXT -->
+            <h2 style="margin-top:20px;margin-bottom:12px;font-size:25px;">{{item.0.title|urlize|url_target_blank}}</h2>
+            <p class="widget-box-status-text" style="margin-bottom:5px;font-size:20px">{{item.0.content|urlize|url_target_blank}}</p>
+            <!-- /WIDGET BOX STATUS TEXT -->
+
+          </div>
+          <!-- /WIDGET BOX STATUS CONTENT -->
+        </div>
+        <!-- /WIDGET BOX STATUS -->
+          {%if item.0.image %}
+          <img loading="lazy" style="border-top-left-radius:12px;border-top-right-radius:12px;max-width:100%" src="{{item.0.image.name|change_to_imagekit_url}}"></img>
+          {%endif%}
+          <!-- POST OPTIONS -->
+          <div class="post-options">
+            <!-- POST OPTION WRAP -->
+            <div class="post-option-wrap">
+              <!-- POST OPTION -->
+              <div data-what-type="post" data-what-id="{{item.0.id}}"
+                class="post-option reaction-options-dropdown-trigger">
+                <!-- POST OPTION ICON -->
+                {%csrf_token%}
+                {%if user.is_authenticated%}
+                <div style="margin-right:15px" class="vote-wrapper" id="upvote-wrapper">
+                  <img onclick="vote(this)" data-vote-type="upvote" style="margin-right:0px"
+                    src="{% static 'img/upvote.svg' %}"
+                    class="vote upvote {% ifequal item.1 1 %} upvoted {% endifequal %} post-option-icon icon-thumbs-up"></img>
+                  <!-- /POST OPTION ICON -->
+                </div>
+                {%else%}
+                <a href="{% url 'login' %}" style="margin-right:15px" class="vote-wrapper" id="upvote-wrapper">
+                  <img data-vote-type="upvote" style="margin-right:0px" src="{% static 'img/upvote.svg' %}"
+                    class="vote upvote post-option-icon icon-thumbs-up"></img>
+                  <!-- /POST OPTION ICON -->
+                </a>
+                {%endif%}
+                <!-- POST OPTION TEXT -->
+                <p class="post-option-text vote-score" style="font-size:17px">{{item.0.score}}</p>
+                <!-- /POST OPTION TEXT -->
+
+                <!-- POST OPTION ICON -->
+                {% if user.is_authenticated %}
+                <div style="margin-left:15px" class="vote-wrapper" id="downvote-wrapper">
+                  <img onclick="vote(this)" data-vote-type="downvote" style="margin-left:0px"
+                    src="{% static 'img/upvote.svg' %}" style="margin-left:15px;margin-right:0px"
+                    class="vote downvote {% ifequal item.1 -1 %} downvoted {% endifequal %} post-option-icon icon-thumbs-up"></img>
+                </div>
+                {%else %}
+                <a href="{% url 'login' %}" style="margin-left:15px" class="vote-wrapper" id="downvote-wrapper">
+                  <img data-vote-type="downvote" style="margin-left:0px" src="{% static 'img/upvote.svg' %}"
+                    style="margin-left:15px;margin-right:0px"
+                    class="vote downvote post-option-icon icon-thumbs-up"></img>
+                </a>
+                {%endif%}
+                <!-- /POST OPTION ICON -->
+              </div>
+              <!-- /POST OPTION -->
+
+            </div>
+            <!-- /POST OPTION WRAP -->
+
+            <!-- POST OPTION -->
+            <a href="{{item.0.get_absolute_url}}" class="post-option">
+              <!-- POST OPTION ICON -->
+              <svg class="post-option-icon icon-comment">
+                <use xlink:href="#svg-comment"></use>
+              </svg>
+              <!-- /POST OPTION ICON -->
+
+              <!-- POST OPTION TEXT -->
+              <p class="post-option-text">{{item.0.comment_set.count}} Comments</p>
+              <!-- /POST OPTION TEXT -->
+            </a>
+            <!-- /POST OPTION -->
+
+            <!-- POST OPTION -->
+            <div class="post-option">
+              <!-- POST OPTION ICON -->
+              <svg class="post-option-icon icon-share">
+                <use xlink:href="#svg-share"></use>
+              </svg>
+              <!-- /POST OPTION ICON -->
+
+              <!-- POST OPTION TEXT -->
+              <p class="post-option-text">Share</p>
+              <!-- /POST OPTION TEXT -->
+            </div>
+            <!-- /POST OPTION -->
+          </div>
+          <!-- /POST OPTIONS -->
+      </div>
+      <!-- Widget Box  /-->
+      {% endfor %}
+      </div>
+
+      <!-- LOADER BARS -->
+      <div style="display:none" class="loader-bars">
+        <div class="loader-bar"></div>
+        <div class="loader-bar"></div>
+        <div class="loader-bar"></div>
+        <div class="loader-bar"></div>
+        <div class="loader-bar"></div>
+        <div class="loader-bar"></div>
+        <div class="loader-bar"></div>
+        <div class="loader-bar"></div>
+      </div>
+      <!-- /LOADER BARS -->
+      {% if page_obj.has_next %}
+      <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+      {% endif %}
+    </div>
+    <!-- /GRID COLUMN -->
+
+    <!-- GRID COLUMN -->
+    <div class="grid-column">
+    </div>
+    <!-- /GRID COLUMN -->
+  </div>
+  <!-- /GRID -->
+</div>
+<!-- /CONTENT GRID -->
+{%endblock%}
+
+{% block scripts%}
+<script src="{% static 'js/vote.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/infinite.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/infiniteload.js' %}"></script>
+{% endblock %}

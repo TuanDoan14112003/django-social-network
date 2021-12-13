@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- bootstrap 4.3.1 -->
+    <link rel="stylesheet" href="{% static 'css/vendor/bootstrap.min.css' %}">
+    <!-- styles -->
+    <link rel="stylesheet" href="{% static 'css/styles.min.css' %}">
+    <!-- favicon -->
+    <link rel="icon" href="{% static 'img/favicon.ico' %}">
+    <title>Anikon | Register</title>
+  </head>
+<body>
+
+  <!-- LANDING -->
+  <div class="landing">
+    {% comment %} <!-- LANDING DECORATION -->
+    <div class="landing-decoration"></div>
+    <!-- /LANDING DECORATION --> {% endcomment %}
+
+    <!-- LANDING INFO -->
+    <div class="landing-info">
+      <!-- LOGO -->
+      <div class="logo">
+        {% comment %} <!-- ICON LOGO VIKINGER -->
+        <svg class="icon-logo-vikinger">
+          <use xlink:href="#svg-logo-vikinger"></use>
+        </svg>
+        <!-- /ICON LOGO VIKINGER --> {% endcomment %}
+      </div>
+      <!-- /LOGO -->
+
+      <!-- LANDING INFO PRETITLE -->
+      <h2 class="landing-info-pretitle">Welcome to</h2>
+      <!-- /LANDING INFO PRETITLE -->
+
+      <!-- LANDING INFO TITLE -->
+      <h1 class="landing-info-title">ANIKON</h1>
+      <!-- /LANDING INFO TITLE -->
+
+      <!-- LANDING INFO TEXT -->
+      <p class="landing-info-text">A social network</p>
+      <!-- /LANDING INFO TEXT -->
+
+      <!-- TAB SWITCH -->
+      <div class="tab-switch">
+        <!-- TAB SWITCH BUTTON -->
+        <a href="{% url 'login' %}" style="width:150px; margin-right:20px" class="button primary">Login</a>
+        <!-- /TAB SWITCH BUTTON -->
+
+        <!-- TAB SWITCH BUTTON -->
+        <a href="{% url 'django_registration_register' %}"  style="width:150px" class="button secondary">Register</a>
+        <!-- /TAB SWITCH BUTTON -->
+      </div>
+      <!-- /TAB SWITCH -->
+    </div>
+    <!-- /LANDING INFO -->
+
+    <!-- LANDING FORM -->
+    <div class="landing-form">
+      <!-- FORM BOX -->
+      <div class="form-box login-register-form-element">
+        {% comment %} <!-- FORM BOX DECORATION -->
+        <img class="form-box-decoration overflowing" src="{% static 'img/landing/rocket.png' %}" alt="rocket">
+        <!-- /FORM BOX DECORATION --> {% endcomment %}
+
+        <!-- FORM BOX TITLE -->
+        <h2 style="font-size:30px" class="form-box-title">Thank you for registering!</h2>
+        <!-- /FORM BOX TITLE -->
+  
+    
+        <!-- LINED TEXT -->
+        <p style="text-align: center;font-size:20px; color:rgb(46, 197, 20);margin-top:20px" class="">We have sent an email to you to. Please follow the instruction to activate your account. Remember to check the spam folder if you don't receive one</p>
+        <!-- /LINED TEXT -->
+      </div>
+      <!-- /FORM BOX -->
+    <div style="display:block;height:400px">
+      <div style="display:hidden;">
+      </div>
+    </div>
+
+    </div>
+    <!-- /LANDING FORM -->
+  </div>
+  <!-- /LANDING -->
+
+<!-- app -->
+<script src="{% static 'js/utils/app.js' %}"></script>
+<!-- XM_Plugins -->
+<script src="{% static 'js/vendor/xm_plugins.min.js' %}"></script>
+<!-- form.utils -->
+<script src="{% static 'js/form/form.utils.js' %}"></script>
+<!-- SVG icons -->
+<script src="{% static 'js/utils/svg-loader.js' %}"></script>
+</body>
+</html>
